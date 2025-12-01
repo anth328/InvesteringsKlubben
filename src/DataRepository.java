@@ -16,7 +16,6 @@ public class DataRepository {
         personer = new ArrayList<>();
     }
 
-    
     public void indlæs() {
         System.out.println("Indlæser data");
     }
@@ -42,8 +41,3 @@ public class DataRepository {
         return personer;
     }
 }
-
-class Aktier {}
-class Portfolio {}
-class Valuta {}
-class User {}
