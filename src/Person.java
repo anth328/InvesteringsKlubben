@@ -1,15 +1,14 @@
 import java.time.LocalDate;
 
-public class Person {
+public abstract class Person {
 
     private String fullName;
     private String email;
-    private LocalDate date;
+    private LocalDate birthDate;
 
-    Person(String fullName, String email, LocalDate date){
+    Person(String fullName, String email, LocalDate birthDate){
         this.fullName = fullName;
         this.email = email;
-        this.date = date;
+        this.birthDate = birthDate;
     }
-    
 }
