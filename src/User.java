@@ -17,7 +17,4 @@ public class User extends Person {
         this.lastUpdate = lastUpdate;
         this.userRole = userRole;
     }
-
-
-
 }
