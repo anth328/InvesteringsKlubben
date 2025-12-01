@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class DataRepository {
 
-    private ArrayList<Aktier> aktier;
+    private ArrayList<Aktie> aktier;
     private ArrayList<Portfolio> portfolioList;
     private ArrayList<Valuta> valutaer;
     private ArrayList<User> users;
@@ -21,7 +21,7 @@ public class DataRepository {
     }
 
 
-    public ArrayList<Aktier> getAktier() {
+    public ArrayList<Aktie> getAktier() {
         return aktier;
     }
 
