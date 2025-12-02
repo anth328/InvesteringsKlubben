@@ -12,6 +12,7 @@ public class DataRepository {
     private ArrayList<Valuta> valutaer;
     private ArrayList<User> users;
     private ArrayList<Person> personer;
+    private ArrayList<Transactions> transactions;
 
     public DataRepository() {
         aktier = new ArrayList<>();
@@ -19,6 +20,7 @@ public class DataRepository {
         valutaer = new ArrayList<>();
         users = new ArrayList<>();
         personer = new ArrayList<>();
+        transactions = new ArrayList<>();
     }
 
     public void indlæs() {
@@ -44,6 +46,23 @@ public class DataRepository {
 
     public ArrayList<Person> getPersoner() {
         return personer;
+    }
+
+    public ArrayList<Transactions> getTransactions() {
+        return transactions;
+    }
+
+    public void addTransaction(Transactions t) {
+        transactions.add(t);
+    }
+
+    public void printAllTransactions() {
+        for (Transactions t : transactions) {
+            System.out.println(t);
+
+
+
+        }
     }
 
     public void addUsers(User user){

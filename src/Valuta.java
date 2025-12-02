@@ -3,15 +3,15 @@ import java.time.LocalDate;
 public class Valuta {
 
     private String currency;
-    private String qouteCurrency;
+    private String quoteCurrency;
     private float rate;
     private LocalDate lastUpdate;
 
 
-    public Valuta(String currency, String qouteCurrency, float rate, LocalDate lastUpdate){
+    public Valuta(String currency, String quoteCurrency, float rate, LocalDate lastUpdate){
 
         this.currency = currency;
-        this.qouteCurrency = qouteCurrency;
+        this.quoteCurrency = quoteCurrency;
         this.rate = rate;
         this.lastUpdate = lastUpdate;
 
