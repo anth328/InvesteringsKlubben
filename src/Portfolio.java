@@ -29,7 +29,12 @@ public int getMaengde(){
 private String getTicker(){
         return ticker;
 }
-
+    public ArrayList<Aktie> getEgneAktier() {
+        return egetAktier;
+    }
+    public void addAktier(Aktie aktier) {
+        egetAktier.add(aktier);
+    }
 
 
 }
