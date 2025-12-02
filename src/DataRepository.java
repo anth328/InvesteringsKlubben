@@ -95,21 +95,29 @@ public class DataRepository {
 
         return valutaList;
     }
-    public static List<Bond> Obligationer()
-    {
+    public static List<Bond> Obligationer() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         List<Bond> bondList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv")))
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
             String line = br.readLine();
             Bond bond = null;
-            while ((line = br.readLine() != null))
-            {
+            while ((line = br.readLine()) != null) {
                 String[] bondData = line.split(semiColon);
                 String ticker = bondData[0];
                 String name = bondData[1];
-                float price = bondData[2];
+                float price = Float.parseFloat(bondData[2].replace(",", "."));
+                String currency = bondData[3];
+                float coupon_rate = Float.parseFloat(bondData[4].replace(",", "."));
+                 LocalDate issue_date = LocalDate.parse(bondData[5], formatter);
+                 LocalDate maturity_date = LocalDate.parse(bondData[6], formatter);
+                 String rating = bondData[7];
+                 String market = bondData[8];
+                 LocalDate last_updated = LocalDate.parse(bondData[9], formatter);
             }
-    }
+        } catch (IOException e) {
+            System.out.println("Error: fejl i stockmarket.csv");
+        }
+        return bondList;
     }
 
     public DataRepository() {
