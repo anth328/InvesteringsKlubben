@@ -7,8 +7,7 @@ public class Portfolio {
     private int maengde;
     private String ticker;
 
-    private ArrayList<Aktie> egetAktier =  new ArrayList<>();
-
+    private ArrayList<Aktie> egetAktier;
 
 
     public Portfolio(float balance, int maengde, String ticker){
@@ -16,6 +15,7 @@ public class Portfolio {
         this.balance = balance;
         this.maengde = maengde;
         this.ticker = ticker;
+        egetAktier =  new ArrayList<>();
 
     }
 public float getBalance () {
@@ -43,7 +43,8 @@ public void removeAktier(Aktie aktier) {
 @Override
 
     public String toString (){
-        return "Balance: "+balance+ " Mængde: "+maengde+ " Ticker: "+ticker;
+        return "Balance: "+balance+ " Mængde: "+maengde+ " Ticker: "+ticker+ "Aktier eget: "+egetAktier;
+
     }
 
 
