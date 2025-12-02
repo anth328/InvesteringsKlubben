@@ -11,7 +11,11 @@
       </profile-state>
     </entry>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectRootManager" version="2" languageLevel="JDK_24" project-jdk-name="openjdk-24" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-24" project-jdk-type="JavaSDK">
+>>>>>>> Stashed changes
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
