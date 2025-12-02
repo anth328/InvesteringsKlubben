@@ -38,6 +38,8 @@ private String getTicker(){
 public void removeAktier(Aktie aktier) {
         egetAktier.remove(aktier);
 }
+
+
 @Override
 
     public String toString (){
