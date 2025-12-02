@@ -26,4 +26,11 @@ public class Aktie {
     }
 
 
+    @Override
+
+    public String toString() {
+        return "ticker: " + ticker + " Navn: " + navn + " Sektor: " + sektor + " Pris: " + pris + " Valuta: " + valuta + " Rating: " + rating +
+                " DividendYield: " + dividendYield + " Market: " + market + "Last Updated: " + lastUpdated;
+    }
+    }
 }
