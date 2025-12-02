@@ -18,6 +18,18 @@ public class Portfolio {
         this.ticker = ticker;
 
     }
+public float getBalance () {
+ return balance;
+}
+
+public int getMaengde(){
+        return maengde;
+}
+
+private String getTicker(){
+        return ticker;
+}
+
 
 
 }
