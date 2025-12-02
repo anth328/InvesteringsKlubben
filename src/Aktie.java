@@ -2,10 +2,10 @@ import java.time.LocalDate;
 
 public class Aktie {
     private String ticker;
-    private String navn;
-    private String sektor;
-    private float pris;
-    private Valuta valuta;
+    private String name;
+    private String sector;
+    private float price;
+    private String currency;
     private String rating;
     private float dividendYield;
     private String market;
@@ -13,12 +13,12 @@ public class Aktie {
 
     Aktie(){}
 
-    public Aktie(String ticker, String navn, String sektor, float pris, Valuta valuta, String rating, float dividendYield, String market,LocalDate lastUpdated){
+    public Aktie(String ticker, String name, String sector, float price, String currency, String rating, float dividendYield, String market,LocalDate lastUpdated){
         this.ticker = ticker;
-        this.navn = navn;
-        this.sektor = sektor;
-        this.pris = pris;
-        this.valuta = valuta;
+        this.name = name;
+        this.sector = sector;
+        this.price = price;
+        this.currency = currency;
         this.rating = rating;
         this.dividendYield = dividendYield;
         this.market = market;
@@ -29,7 +29,7 @@ public class Aktie {
     @Override
 
     public String toString() {
-        return "ticker: " + ticker + " Navn: " + navn + " Sektor: " + sektor + " Pris: " + pris + " Valuta: " + valuta + " Rating: " + rating +
+        return "ticker: " + ticker + " Navn: " + name + " Sektor: " + sector + " Pris: " + price + " Valuta: " + currency + " Rating: " + rating +
                 " DividendYield: " + dividendYield + " Market: " + market + "Last Updated: " + lastUpdated;
     }
 }

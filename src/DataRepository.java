@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.List;
 
 
 public class DataRepository {
@@ -13,6 +15,34 @@ public class DataRepository {
     private ArrayList<User> users;
     private ArrayList<Person> personer;
     private ArrayList<Transactions> transactions;
+    public static final String semiColon = ";";
+
+    public static List<Aktie> stockMarket() {
+        List<Aktie> aktieliste = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try (BufferedReader br = new BufferedReader(new FileReader("stockmarket.csv"))) {
+            String line = br.readLine();
+            Aktie aktie = null;
+            while ((line = br.readLine()) != null) {
+                String[] aktiedata = line.split(semiColon);
+                String ticker = aktiedata[0];
+                String name = aktiedata[1];
+                String sector = aktiedata[2];
+                float price = Float.parseFloat(aktiedata[3].replace(",", "."));
+                String currency = aktiedata[4];
+                String rating = aktiedata[5];
+                float dividendYield = Float.parseFloat(aktiedata[6].replace(",", "."));
+                String market = aktiedata[7];
+                LocalDate lastUpdated = LocalDate.parse(aktiedata[8], formatter);
+                aktie = new Aktie(ticker, name, sector, price, currency, rating, dividendYield, market, lastUpdated);
+                aktieliste.add(aktie);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error: fejl i stockmarket.csv");;
+        }
+        return aktieliste;
+    }
 
     public DataRepository() {
         aktier = new ArrayList<>();
