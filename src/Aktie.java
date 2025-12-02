@@ -32,5 +32,4 @@ public class Aktie {
         return "ticker: " + ticker + " Navn: " + navn + " Sektor: " + sektor + " Pris: " + pris + " Valuta: " + valuta + " Rating: " + rating +
                 " DividendYield: " + dividendYield + " Market: " + market + "Last Updated: " + lastUpdated;
     }
-    }
 }

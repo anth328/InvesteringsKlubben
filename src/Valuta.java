@@ -16,4 +16,9 @@ public class Valuta {
         this.lastUpdate = lastUpdate;
 
     }
+
+    @Override
+    public String toString(){
+        return "Valuta: " + currency + " citatValuta: " + quoteCurrency + " Rate: " + rate + " Sidst Opdateret: " + lastUpdate;
+    }
 }
