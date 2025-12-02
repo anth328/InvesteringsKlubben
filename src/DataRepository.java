@@ -69,6 +69,7 @@ public class DataRepository {
         return brugerListe;
     }
 
+
     public DataRepository() {
         aktier = new ArrayList<>();
         portfolioList = new ArrayList<>();
