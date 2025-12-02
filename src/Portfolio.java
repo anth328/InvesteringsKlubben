@@ -35,6 +35,14 @@ private String getTicker(){
     public void addAktier(Aktie aktier) {
         egetAktier.add(aktier);
     }
+public void removeAktier(Aktie aktier) {
+        egetAktier.remove(aktier);
+}
+@Override
+
+    public String toString (){
+        return "Balance: "+balance+ " Mængde: "+maengde+ " Ticker: "+ticker;
+    }
 
 
 }
