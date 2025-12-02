@@ -10,5 +10,6 @@ public class Test {
 
 
         System.out.println(DataRepository.stockMarket());
+        System.out.println(DataRepository.bruger());
     }
 }

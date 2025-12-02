@@ -43,6 +43,31 @@ public class DataRepository {
         }
         return aktieliste;
     }
+    public static List<User> bruger() {
+        List<User> brugerListe = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
+            String line = br.readLine();
+            User user = null;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(semiColon);
+                int user_id = Integer.parseInt(userData[0]);
+                String full_name = userData[1];
+                String email = userData[2];
+                LocalDate birth_date = LocalDate.parse(userData[3], formatter);
+                float initial_cash_DKK = Float.parseFloat(userData[4]);
+                LocalDate created_at = LocalDate.parse(userData[5], formatter);
+                LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
+
+                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
+                brugerListe.add(user);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error: fejl i stockmarket.csv");;
+        }
+        return brugerListe;
+    }
 
     public DataRepository() {
         aktier = new ArrayList<>();
@@ -99,17 +124,6 @@ public class DataRepository {
         users.add(user);
     }
 
-    public void indlæsUsers(){
-        try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))){
-            String line;
-            while ((line = br.readLine()) != null){
-                String[] split = line.split(";");
-                User user = new User(Integer.parseInt(split[0]),split[1],"test",split[2],LocalDate.parse(split[3]),Float.parseFloat(split[4]),LocalDate.parse(split[5]),LocalDate.parse(split[6]),UserRole.Leder);
-                addUsers(user);
-                System.out.println(user);
-            }
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
+
     }
-}
+
