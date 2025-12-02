@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.IOException;
+
 
 public class DataRepository {
 
@@ -39,5 +44,23 @@ public class DataRepository {
 
     public ArrayList<Person> getPersoner() {
         return personer;
+    }
+
+    public void addUsers(User user){
+        users.add(user);
+    }
+
+    public void indlæsUsers(){
+        try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))){
+            String line;
+            while ((line = br.readLine()) != null){
+                String[] split = line.split(";");
+                User user = new User(Integer.parseInt(split[0]),split[1],"test",split[2],LocalDate.parse(split[3]),Float.parseFloat(split[4]),LocalDate.parse(split[5]),LocalDate.parse(split[6]),UserRole.Leder);
+                addUsers(user);
+                System.out.println(user);
+            }
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
     }
 }
