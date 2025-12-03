@@ -30,7 +30,7 @@ private String getTicker(){
         return ticker;
 }
 
-public float getBuyPrice(){
+/*public float getBuyPrice(){
         return buyPrice;
 }
 public float getCurrentPrice(){
@@ -39,7 +39,7 @@ public float getCurrentPrice(){
 
 public float getProfitForAktie(Aktie aktier){
         
-}
+}*/
 
 
 

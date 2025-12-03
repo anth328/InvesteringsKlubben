@@ -94,7 +94,7 @@ public class DataRepository {
 
         return valutaList;
     }
-    public static List<Bond> Obligationer() {
+    /*public static List<Bond> Obligationer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         List<Bond> bondList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
@@ -117,7 +117,7 @@ public class DataRepository {
             System.out.println("Error: fejl i stockmarket.csv");
         }
         return bondList;
-    }
+    }*/
 
     public DataRepository() {
             aktier = new ArrayList<>();

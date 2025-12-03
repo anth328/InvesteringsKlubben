@@ -7,6 +7,7 @@ public class Test {
         LocalDate date = LocalDate.now();
 
         Valuta valuta = new Valuta("DKK","test",1,date);
+        User user = new User(1,"Maria Jensen","maria.jensen@email.com",date,100000,date,date);
 
 
 
@@ -18,6 +19,7 @@ public class Test {
         System.out.println(data.getAktier());
 
         System.out.println(DataRepository.valutaer());
-        System.out.println(DataRepository.Obligationer());
+       //System.out.println(DataRepository.Obligationer());
+        user.UsernameMatch();
     }
 }
