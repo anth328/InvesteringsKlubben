@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class User extends Person {
@@ -28,18 +29,36 @@ public class User extends Person {
         return user_id;
     }
 
-    public int UsernameMatch(){
+    public User UsernameMatch(){
         DataRepository data = new DataRepository();
         data.bruger();
-        int userID = sc.nextInt();
+
+        System.out.println("Velkommen til Investerings Klubben");
+        System.out.println("Skriv mail for at login: ");
+        String mail = sc.nextLine();
+
         for (User u : data.getUsers()){
-            if (userID == (u.getUser_id())){
-                System.out.println("You have loged in on " + u.getFullname());
-                return 1;
+
+            System.out.println("Bruger ID:");
+            int id = sc.nextInt();
+
+            if (Objects.equals(mail, u.getEMail())){
+                if(id == u.getUser_id()) {
+                    System.out.println("You have logged in as " + u.getFullname());
+                    return u;
+                }
+                else {
+                    System.out.println("Failed Login Try Again");
+                    return null;
+                }
+            }
+            else {
+                System.out.println("Failed Login Try Again");
+                return null;
             }
         }
         System.out.println("Failed Login Try Again");
-        return -1;
+        return null;
     }
 
     @Override
