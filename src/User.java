@@ -44,7 +44,7 @@ public class User extends Person {
 
             if (Objects.equals(mail, u.getEMail())){
                 if(id == u.getUser_id()) {
-                    System.out.println("You have logged in as " + u.getFullname());
+                    System.out.println("Login successful");
                     return u;
                 }
                 else {
