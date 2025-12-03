@@ -35,26 +35,18 @@ public class User extends Person {
 
         System.out.println("Velkommen til Investerings Klubben");
         System.out.println("Skriv mail for at login: ");
+
         String mail = sc.nextLine();
 
         for (User u : data.getUsers()){
-
-            System.out.println("Bruger ID:");
-            int id = sc.nextInt();
-
             if (Objects.equals(mail, u.getEMail())){
+                System.out.println("Bruger ID:");
+                int id = sc.nextInt();
+
                 if(id == u.getUser_id()) {
                     System.out.println("Login successful");
                     return u;
                 }
-                else {
-                    System.out.println("Failed Login Try Again");
-                    return null;
-                }
-            }
-            else {
-                System.out.println("Failed Login Try Again");
-                return null;
             }
         }
         System.out.println("Failed Login Try Again");
