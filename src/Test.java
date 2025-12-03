@@ -1,30 +1,21 @@
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
-public class Test {
-    public static void main(String[] args){
-        DataRepository data = new DataRepository();
-        LocalDate date = LocalDate.now();
+public static void main(String[] args){
+    DataRepository transaction = new DataRepository();
 
-        Valuta valuta = new Valuta("DKK","test",1,date);
-        User user = new User(1,"Maria Jensen","maria.jensen@email.com",date,100000,date,date);
+    Transactions t1 = new Transactions(1, 10, "AAPL", 150, 5, 1, 20240101, 1, null);
+    Transactions t2 = new Transactions(2, 12, "TSLA", 220, 2, 1, 20240102, 1, null);
 
+    transaction.addTransaction(t1);
+    transaction.addTransaction(t2);
 
+    transaction.saveTransactionToFile(t1);
+    transaction.saveTransactionToFile(t2);
 
+    transaction.printAllTransactions();
 
-
-        data.stockMarket();
-        data.bruger();
-        data.valutaer();
-        data.bonds();
-        System.out.println(data.getUsers());
-        System.out.println(data.getAktier());
-        System.out.println(data.getValutaer());
-        System.out.println(data.getBonds());
+    System.out.println("Transaktion gemt i transactions.csv");
 
 
-
-        //System.out.println(DataRepository.Obligationer());
-        user.UsernameMatch();
-    }
 }

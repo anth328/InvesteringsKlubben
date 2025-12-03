@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.List;
 
 
@@ -114,6 +116,58 @@ public class DataRepository {
             System.out.println("Error: fejl i stockmarket.csv");
         }
     }
+
+
+    public void saveTransactionToFile(Transactions t) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true))) {
+            writer.write(
+                    t.getId() + ";" +
+                            t.getUserid() + ";" +
+                            t.getTicker() + ";" +
+                            t.getPris() + ";" +
+                            t.getMaengde() + ";" +
+                            t.getValuta() + ";" +
+                            t.getDato() + ";" +
+                            t.getOrder() + ";" +
+                            t.getSalg()
+            );
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Fejl i skrivning til fil: " + e.getMessage());
+        }
+    }
+
+
+
+    /*
+    Oprette en ArrayList og initierere den
+    Lave en add metode til at tilføje en transaktion til ArrayListen
+    en metode til at læse transaktioner fra en fil
+     */
+    public void readTransactionsFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
+            String line;  br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] transactionData = line.split(semiColon);
+                int id = Integer.parseInt(transactionData[0]);
+                int userid = Integer.parseInt(transactionData[1]);
+                String ticker = transactionData[2];
+                float pris = Float.parseFloat(transactionData[3].replace(",", "."));
+                int maengde = Integer.parseInt(transactionData[4]);
+                float valuta = Float.parseFloat(transactionData[5].replace(",", "."));
+                int dato = Integer.parseInt(transactionData[6]);
+                int order = Integer.parseInt(transactionData[7]);
+                Salg salg = Salg.valueOf(transactionData[8]);
+                Transactions transaction = new Transactions(id, userid, ticker, pris, maengde, valuta, dato, order, salg);
+                transactions.add(transaction);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Fejl ved læsning af fil: " + e.getMessage());
+        }
+    }
+
 
     public DataRepository() {
             aktier = new ArrayList<>();
