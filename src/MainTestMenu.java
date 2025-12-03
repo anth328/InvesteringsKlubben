@@ -9,10 +9,12 @@ public class MainTestMenu {
 
         LocalDate date = LocalDate.now();
 
-        User user = new User(11,"Marie Rosen","Marierosen@gmail.com",date,100000,date,date);
+        User user = new User(0,"Marie Rosen","Marierosen@gmail.com",date,100000,date,date);
         User aktiveUser = user.UsernameMatch();
 
         boolean menuRun = true;
+
+        Portfolio port = new Portfolio(0,0,"",0,0);
 
         System.out.println("Velkommen til Investerings klubben: " + aktiveUser.getFullname());
         System.out.println("Nu kan du indtaste et tal for at bruge programmets funktioner");
@@ -26,7 +28,7 @@ public class MainTestMenu {
                     System.out.println("2: minecraft");
                 }
                 case 2:{
-                    System.out.println("minecraft");
+                    port.addUsersTransactionsToList(aktiveUser);
                 }
             }
         }

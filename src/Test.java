@@ -17,5 +17,7 @@ public static void main(String[] args){
 
     System.out.println("Transaktion gemt i transactions.csv");
 
+    transaction.readTransactionsFromFile();
+
 
 }

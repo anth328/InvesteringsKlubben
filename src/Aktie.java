@@ -25,6 +25,10 @@ public class Aktie {
         this.lastUpdated = lastUpdated;
     }
 
+    public String getTicker(){
+        return ticker;
+    }
+
 
     public float getPrice(){
         return price;
