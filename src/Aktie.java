@@ -26,6 +26,11 @@ public class Aktie {
     }
 
 
+    public float getPrice(){
+        return price;
+    }
+
+
     @Override
 
     public String toString() {
