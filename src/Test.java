@@ -15,11 +15,16 @@ public class Test {
 
         data.stockMarket();
         data.bruger();
+        data.valutaer();
+        data.bonds();
         System.out.println(data.getUsers());
         System.out.println(data.getAktier());
+        System.out.println(data.getValutaer());
+        System.out.println(data.getBonds());
 
-        System.out.println(DataRepository.valutaer());
-       //System.out.println(DataRepository.Obligationer());
+
+
+        //System.out.println(DataRepository.Obligationer());
         user.UsernameMatch();
     }
 }

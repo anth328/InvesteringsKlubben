@@ -14,11 +14,11 @@ public class DataRepository {
     private ArrayList<Valuta> valutaer;
     private ArrayList<User> users;
     private ArrayList<Person> personer;
+    private ArrayList<Bond> bonds;
     private ArrayList<Transactions> transactions;
     public static final String semiColon = ";";
 
     public void stockMarket() {
-        List<Aktie> aktieliste = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("stockmarket.csv"))) {
             String line = br.readLine();
@@ -46,7 +46,6 @@ public class DataRepository {
     }
 
     public void bruger() {
-        List<User> brugerListe = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
             String line = br.readLine();
@@ -71,8 +70,7 @@ public class DataRepository {
         }
     }
 
-    public static List<Valuta> valutaer() {
-        List<Valuta> valutaList = new ArrayList<>();
+    public void valutaer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))) {
             String line = br.readLine();
@@ -85,18 +83,15 @@ public class DataRepository {
                 LocalDate lastUpdated = LocalDate.parse(valutaData[3], formatter);
 
                 valuta = new Valuta(base_currency, quote_currency, rate, lastUpdated);
-                valutaList.add(valuta);
+                addValuta(valuta);
             }
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
             ;
         }
-
-        return valutaList;
     }
-    /*public static List<Bond> Obligationer() {
+    public void bonds() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-        List<Bond> bondList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
             String line = br.readLine();
             Bond bond = null;
@@ -112,12 +107,13 @@ public class DataRepository {
                  String rating = bondData[7];
                  String market = bondData[8];
                  LocalDate last_updated = LocalDate.parse(bondData[9], formatter);
+                 bond = new Bond(ticker, name, price, currency, coupon_rate, issue_date, maturity_date, rating, market, last_updated);
+                 addBonds(bond);
             }
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
         }
-        return bondList;
-    }*/
+    }
 
     public DataRepository() {
             aktier = new ArrayList<>();
@@ -126,6 +122,7 @@ public class DataRepository {
             users = new ArrayList<>();
             personer = new ArrayList<>();
             transactions = new ArrayList<>();
+            bonds = new ArrayList<>();
         }
 
         public void indlæs () {
@@ -157,6 +154,11 @@ public class DataRepository {
             return transactions;
         }
 
+        public ArrayList<Bond> getBonds ()
+        {
+            return bonds;
+        }
+
         public void addTransaction (Transactions t){
             transactions.add(t);
         }
@@ -178,6 +180,13 @@ public class DataRepository {
             users.add(user);
         }
 
+        public void addValuta (Valuta valuta){
+            valutaer.add(valuta);
+        }
+
+        public void addBonds (Bond bond){
+                bonds.add(bond);
+        }
 
     }
 
