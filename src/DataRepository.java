@@ -14,11 +14,11 @@ public class DataRepository {
     private ArrayList<Valuta> valutaer;
     private ArrayList<User> users;
     private ArrayList<Person> personer;
+    private ArrayList<Bond> bonds;
     private ArrayList<Transactions> transactions;
     public static final String semiColon = ";";
 
-    public static List<Aktie> stockMarket() {
-        List<Aktie> aktieliste = new ArrayList<>();
+    public void stockMarket() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("stockmarket.csv"))) {
             String line = br.readLine();
@@ -35,18 +35,17 @@ public class DataRepository {
                 String market = aktiedata[7];
                 LocalDate lastUpdated = LocalDate.parse(aktiedata[8], formatter);
                 aktie = new Aktie(ticker, name, sector, price, currency, rating, dividendYield, market, lastUpdated);
-                aktieliste.add(aktie);
+                addAktie(aktie);
+
             }
 
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
             ;
         }
-        return aktieliste;
     }
 
-    public static List<User> bruger() {
-        List<User> brugerListe = new ArrayList<>();
+    public void bruger() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
             String line = br.readLine();
@@ -62,18 +61,16 @@ public class DataRepository {
                 LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
 
                 user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
-                brugerListe.add(user);
+                addUsers(user);
             }
 
         } catch (IOException e) {
-            System.out.println("Error: fejl i stockmarket.csv");
+            System.out.println("Error: fejl i users.csv");
             ;
         }
-        return brugerListe;
     }
 
-    public static List<Valuta> valutaer() {
-        List<Valuta> valutaList = new ArrayList<>();
+    public void valutaer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))) {
             String line = br.readLine();
@@ -86,18 +83,15 @@ public class DataRepository {
                 LocalDate lastUpdated = LocalDate.parse(valutaData[3], formatter);
 
                 valuta = new Valuta(base_currency, quote_currency, rate, lastUpdated);
-                valutaList.add(valuta);
+                addValuta(valuta);
             }
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
             ;
         }
-
-        return valutaList;
     }
-    public static List<Bond> Obligationer() {
+    public void bonds() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-        List<Bond> bondList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
             String line = br.readLine();
             Bond bond = null;
@@ -113,11 +107,12 @@ public class DataRepository {
                  String rating = bondData[7];
                  String market = bondData[8];
                  LocalDate last_updated = LocalDate.parse(bondData[9], formatter);
+                 bond = new Bond(ticker, name, price, currency, coupon_rate, issue_date, maturity_date, rating, market, last_updated);
+                 addBonds(bond);
             }
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
         }
-        return bondList;
     }
 
     public DataRepository() {
@@ -127,6 +122,7 @@ public class DataRepository {
             users = new ArrayList<>();
             personer = new ArrayList<>();
             transactions = new ArrayList<>();
+            bonds = new ArrayList<>();
         }
 
         public void indlæs () {
@@ -158,8 +154,18 @@ public class DataRepository {
             return transactions;
         }
 
+        public ArrayList<Bond> getBonds ()
+        {
+            return bonds;
+        }
+
         public void addTransaction (Transactions t){
             transactions.add(t);
+        }
+
+        public void addAktie (Aktie aktie)
+        {
+            aktier.add(aktie);
         }
 
         public void printAllTransactions () {
@@ -174,6 +180,13 @@ public class DataRepository {
             users.add(user);
         }
 
+        public void addValuta (Valuta valuta){
+            valutaer.add(valuta);
+        }
+
+        public void addBonds (Bond bond){
+                bonds.add(bond);
+        }
 
     }
 

@@ -7,8 +7,6 @@ public class Main{
         transaction.addTransaction(new Transactions(2, 12, "TSLA", 220, 2, 1, 20240102, 1, null));
 
         transaction.printAllTransactions();
-
-
     }
 
 

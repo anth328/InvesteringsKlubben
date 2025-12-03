@@ -24,11 +24,17 @@ public class User extends Person {
         this.last_updated = last_updated;
     }
 
-    public int UsernameMatch(){
-        String userID = sc.nextLine();
+    public int getUser_id(){
+        return user_id;
+    }
 
-        for (User u : dataRepository.getUsers()){
-            if (userID.equals(getFullname())){
+    public int UsernameMatch(){
+        DataRepository data = new DataRepository();
+        data.bruger();
+        int userID = sc.nextInt();
+        for (User u : data.getUsers()){
+            if (userID == (u.getUser_id())){
+                System.out.println("You have loged in on " + u.getFullname());
                 return 1;
             }
         }
