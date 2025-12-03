@@ -29,6 +29,21 @@ public int getMaengde(){
 private String getTicker(){
         return ticker;
 }
+
+public float getBuyPrice(){
+        return buyPrice;
+}
+public float getCurrentPrice(){
+        return currentPrice;
+}
+
+public float getProfitForAktie(Aktie aktier){
+        
+}
+
+
+
+
     public ArrayList<Aktie> getEgneAktier() {
         return egetAktier;
     }
