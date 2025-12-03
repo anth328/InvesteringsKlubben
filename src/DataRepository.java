@@ -17,7 +17,7 @@ public class DataRepository {
     private ArrayList<Transactions> transactions;
     public static final String semiColon = ";";
 
-    public static List<Aktie> stockMarket() {
+    public void stockMarket() {
         List<Aktie> aktieliste = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("stockmarket.csv"))) {
@@ -35,17 +35,17 @@ public class DataRepository {
                 String market = aktiedata[7];
                 LocalDate lastUpdated = LocalDate.parse(aktiedata[8], formatter);
                 aktie = new Aktie(ticker, name, sector, price, currency, rating, dividendYield, market, lastUpdated);
-                aktieliste.add(aktie);
+                addAktie(aktie);
+
             }
 
         } catch (IOException e) {
             System.out.println("Error: fejl i stockmarket.csv");
             ;
         }
-        return aktieliste;
     }
 
-    public static List<User> bruger() {
+    public void bruger() {
         List<User> brugerListe = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
@@ -62,14 +62,13 @@ public class DataRepository {
                 LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
 
                 user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
-                brugerListe.add(user);
+                addUsers(user);
             }
 
         } catch (IOException e) {
-            System.out.println("Error: fejl i stockmarket.csv");
+            System.out.println("Error: fejl i users.csv");
             ;
         }
-        return brugerListe;
     }
 
     public static List<Valuta> valutaer() {
@@ -160,6 +159,11 @@ public class DataRepository {
 
         public void addTransaction (Transactions t){
             transactions.add(t);
+        }
+
+        public void addAktie (Aktie aktie)
+        {
+            aktier.add(aktie);
         }
 
         public void printAllTransactions () {
