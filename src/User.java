@@ -3,24 +3,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User extends Person {
-    private int userID;
+    private int user_id;
     private String password;
-    private float intitialCash;
-    private LocalDate createdAt;
-    private LocalDate lastUpdate;
+    private float initial_cash_DKK;
+    private LocalDate created_at;
+    private LocalDate last_updated;
     private UserRole userRole;
+
+
     Scanner sc = new Scanner(System.in);
     ArrayList users = new ArrayList<>();
     DataRepository dataRepository;
 
-    public User(int userID, String fullname, String password,String email,LocalDate birthDate,float intitialCash,LocalDate createdAt,LocalDate lastUpdate,UserRole userRole){
-        super(fullname,email,birthDate);
-        this.userID = userID;
-        this.password = password;
-        this.intitialCash = intitialCash;
-        this.createdAt = createdAt;
-        this.lastUpdate = lastUpdate;
-        this.userRole = userRole;
+    public User(int user_id, String full_name, String email,LocalDate birth_date,float initial_cash_DKK,LocalDate created_at,LocalDate last_updated){
+        super(full_name,email,birth_date);
+
+        this.user_id = user_id;
+        this.initial_cash_DKK = initial_cash_DKK;
+        this.created_at = created_at;
+        this.last_updated = last_updated;
     }
 
     public int UsernameMatch(){
@@ -36,7 +37,8 @@ public class User extends Person {
     }
 
     @Override
-    public String toString(){
-        return userID + getFullname() + password + getEMail() + getBirthDate() + intitialCash + createdAt + lastUpdate + userRole;
+
+    public String toString() {
+        return "User id: " + user_id + " Full name: " + full_name + " Email: " + email + " Birth_date: " + birth_date + " initial cash DKK: " + initial_cash_DKK + " Createdd at: " + created_at+ "Last Updated: " + last_updated;
     }
 }

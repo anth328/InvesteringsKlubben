@@ -39,77 +39,141 @@ public class DataRepository {
             }
 
         } catch (IOException e) {
-            System.out.println("Error: fejl i stockmarket.csv");;
+            System.out.println("Error: fejl i stockmarket.csv");
+            ;
         }
         return aktieliste;
     }
 
-    public DataRepository() {
-        aktier = new ArrayList<>();
-        portfolioList = new ArrayList<>();
-        valutaer = new ArrayList<>();
-        users = new ArrayList<>();
-        personer = new ArrayList<>();
-        transactions = new ArrayList<>();
-    }
+    public static List<User> bruger() {
+        List<User> brugerListe = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
+            String line = br.readLine();
+            User user = null;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(semiColon);
+                int user_id = Integer.parseInt(userData[0]);
+                String full_name = userData[1];
+                String email = userData[2];
+                LocalDate birth_date = LocalDate.parse(userData[3], formatter);
+                float initial_cash_DKK = Float.parseFloat(userData[4]);
+                LocalDate created_at = LocalDate.parse(userData[5], formatter);
+                LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
 
-    public void indlæs() {
-        System.out.println("Indlæser data");
-    }
+                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
+                brugerListe.add(user);
+            }
 
-
-    public ArrayList<Aktie> getAktier() {
-        return aktier;
-    }
-
-    public ArrayList<Portfolio> getPortfolioList() {
-        return portfolioList;
-    }
-
-    public ArrayList<Valuta> getValutaer() {
-        return valutaer;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public ArrayList<Person> getPersoner() {
-        return personer;
-    }
-
-    public ArrayList<Transactions> getTransactions() {
-        return transactions;
-    }
-
-    public void addTransaction(Transactions t) {
-        transactions.add(t);
-    }
-
-    public void printAllTransactions() {
-        for (Transactions t : transactions) {
-            System.out.println(t);
-
-
-
+        } catch (IOException e) {
+            System.out.println("Error: fejl i stockmarket.csv");
+            ;
         }
+        return brugerListe;
     }
 
-    public void addUsers(User user){
-        users.add(user);
-    }
+    public static List<Valuta> valutaer() {
+        List<Valuta> valutaList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))) {
+            String line = br.readLine();
+            Valuta valuta = null;
+            while ((line = br.readLine()) != null) {
+                String[] valutaData = line.split(semiColon);
+                String base_currency = valutaData[0];
+                String quote_currency = valutaData[1];
+                float rate = Float.parseFloat(valutaData[2].replace(",", "."));
+                LocalDate lastUpdated = LocalDate.parse(valutaData[3], formatter);
 
-    public void indlæsUsers(){
-        try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))){
-            String line;
-            while ((line = br.readLine()) != null){
-                String[] split = line.split(";");
-                User user = new User(Integer.parseInt(split[0]),split[1],"test",split[2],LocalDate.parse(split[3]),Float.parseFloat(split[4]),LocalDate.parse(split[5]),LocalDate.parse(split[6]),UserRole.Leder);
-                addUsers(user);
-                System.out.println(user);
+                valuta = new Valuta(base_currency, quote_currency, rate, lastUpdated);
+                valutaList.add(valuta);
             }
         } catch (IOException e) {
-            System.out.println("Error");
+            System.out.println("Error: fejl i stockmarket.csv");
+            ;
         }
+
+        return valutaList;
     }
-}
+    public static List<Bond> Obligationer() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        List<Bond> bondList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
+            String line = br.readLine();
+            Bond bond = null;
+            while ((line = br.readLine()) != null) {
+                String[] bondData = line.split(semiColon);
+                String ticker = bondData[0];
+                String name = bondData[1];
+                float price = Float.parseFloat(bondData[2].replace(",", "."));
+                String currency = bondData[3];
+                float coupon_rate = Float.parseFloat(bondData[4].replace(",", "."));
+                 LocalDate issue_date = LocalDate.parse(bondData[5], formatter);
+                 LocalDate maturity_date = LocalDate.parse(bondData[6], formatter);
+                 String rating = bondData[7];
+                 String market = bondData[8];
+                 LocalDate last_updated = LocalDate.parse(bondData[9], formatter);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: fejl i stockmarket.csv");
+        }
+        return bondList;
+    }
+
+    public DataRepository() {
+            aktier = new ArrayList<>();
+            portfolioList = new ArrayList<>();
+            valutaer = new ArrayList<>();
+            users = new ArrayList<>();
+            personer = new ArrayList<>();
+            transactions = new ArrayList<>();
+        }
+
+        public void indlæs () {
+            System.out.println("Indlæser data");
+        }
+
+
+        public ArrayList<Aktie> getAktier () {
+            return aktier;
+        }
+
+        public ArrayList<Portfolio> getPortfolioList () {
+            return portfolioList;
+        }
+
+        public ArrayList<Valuta> getValutaer () {
+            return valutaer;
+        }
+
+        public ArrayList<User> getUsers () {
+            return users;
+        }
+
+        public ArrayList<Person> getPersoner () {
+            return personer;
+        }
+
+        public ArrayList<Transactions> getTransactions () {
+            return transactions;
+        }
+
+        public void addTransaction (Transactions t){
+            transactions.add(t);
+        }
+
+        public void printAllTransactions () {
+            for (Transactions t : transactions) {
+                System.out.println(t);
+
+
+            }
+        }
+
+        public void addUsers (User user){
+            users.add(user);
+        }
+
+
+    }
+
