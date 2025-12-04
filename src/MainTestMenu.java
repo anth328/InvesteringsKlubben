@@ -6,15 +6,16 @@ public class MainTestMenu {
 
         DataRepository data = new DataRepository();
         data.bruger();
+        data.stockMarket();
+        data.bonds();
+        data.transactions();
 
         LocalDate date = LocalDate.now();
 
-        User user = new User(0,"Marie Rosen","Marierosen@gmail.com",date,100000,date,date);
+        User user = new User(11,"Marie Rosen","Marierosen@gmail.com",date,100000,date,date);
         User aktiveUser = user.UsernameMatch();
 
         boolean menuRun = true;
-
-        Portfolio port = new Portfolio(0,0,"",0,0);
 
         System.out.println("Velkommen til Investerings klubben: " + aktiveUser.getFullname());
         System.out.println("Nu kan du indtaste et tal for at bruge programmets funktioner");
@@ -23,12 +24,38 @@ public class MainTestMenu {
             Scanner sc = new Scanner(System.in);
             int valg = sc.nextInt();
             switch(valg){
-                case 1:{
+                case 1:
+                {
                     System.out.println("1: for hjælp");
-                    System.out.println("2: minecraft");
+                    System.out.println("2: Se aktiemarkedet");
+                    System.out.println("3: Se obligationer");
+                    System.out.println("4: Køb aktier");
+                    System.out.println("5: Vis alle transaktioner");
+                    break;
+
                 }
-                case 2:{
-                    port.addUsersTransactionsToList(aktiveUser);
+
+                case 2:
+                {
+                    data.printAktier();
+                    System.out.println("Vil du købe aktier?, tryk 4");
+                    break;
+
+                }
+
+                case 3:
+                {
+                    data.printBonds();
+                    break;
+                }
+                case 4:
+                {
+                    break;
+                }
+                case 5:
+                {
+                    data.printTransactions();
+                    break;
                 }
             }
         }
