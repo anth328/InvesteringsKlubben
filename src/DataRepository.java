@@ -139,11 +139,7 @@ public class DataRepository {
 
 
 
-    /*
-    Oprette en ArrayList og initierere den
-    Lave en add metode til at tilføje en transaktion til ArrayListen
-    en metode til at læse transaktioner fra en fil
-     */
+
     public void readTransactionsFromFile() {
         try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;  br.readLine();

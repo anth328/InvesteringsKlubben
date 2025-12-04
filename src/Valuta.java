@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class Valuta {
+public class    Valuta {
 
     private String currency;
     private String quoteCurrency;

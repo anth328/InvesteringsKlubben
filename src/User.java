@@ -10,6 +10,7 @@ public class User extends Person {
     private LocalDate created_at;
     private LocalDate last_updated;
     private UserRole userRole;
+    private Portfolio portfolio;
 
 
     Scanner sc = new Scanner(System.in);
@@ -58,4 +59,14 @@ public class User extends Person {
     public String toString() {
         return "User id: " + user_id + " Full name: " + full_name + " Email: " + email + " Birth_date: " + birth_date + " initial cash DKK: " + initial_cash_DKK + " Createdd at: " + created_at+ "Last Updated: " + last_updated;
     }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+
 }

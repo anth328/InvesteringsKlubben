@@ -14,32 +14,34 @@ public class Portfolio {
     private DataRepository data = new DataRepository();
 
 
-    public Portfolio(float balance, int maengde, String ticker, float buyPrice, float currentPrice){
+    public Portfolio(float balance, int maengde, String ticker, float buyPrice, float currentPrice) {
 
         this.balance = balance;
         this.maengde = maengde;
         this.ticker = ticker;
         this.buyPrice = buyPrice;
         this.currentPrice = currentPrice;
-        egetAktier =  new ArrayList<>();
+        egetAktier = new ArrayList<>();
         egneTransactions = new ArrayList<>();
     }
-    public float getBalance () {
+
+    public float getBalance() {
         return balance;
     }
 
-    public int getMaengde(){
+    public int getMaengde() {
         return maengde;
     }
 
-    private String getTicker(){
+    private String getTicker() {
         return ticker;
     }
 
-    public float getBuyPrice(){
+    public float getBuyPrice() {
         return buyPrice;
     }
-    public float getCurrentPrice(){
+
+    public float getCurrentPrice() {
         return currentPrice;
     }
 
@@ -47,14 +49,16 @@ public class Portfolio {
     public ArrayList<Aktie> getEgneAktier() {
         return egetAktier;
     }
+
     public void addAktier(Aktie aktier) {
         egetAktier.add(aktier);
     }
+
     public void removeAktier(Aktie aktier) {
         egetAktier.remove(aktier);
     }
 
-    public float getAktiePrice(){
+    public float getAktiePrice() {
         if (egetAktier.isEmpty()) {
             return 0;
         }
@@ -69,32 +73,44 @@ public class Portfolio {
         return (maengde * aktiePrice) - (maengde * buyPrice);
     }
 
-    public void addUsersTransactionsToList(User user){
+    public void addUsersTransactionsToList(User user) {
         data.readTransactionsFromFile();
-        for (Transactions d : data.getTransactions()){
-            if (d.getUserid()==user.getUser_id()){
+        for (Transactions d : data.getTransactions()) {
+            if (d.getUserid() == user.getUser_id()) {
                 egneTransactions.add(d);
             }
         }
     }
 
-    public void transactionToAktie(){
+    public void transactionToAktie() {
         data.stockMarket();
 
         for (Transactions d : egneTransactions) {
-            for (Aktie a : data.getAktier()){
+            for (Aktie a : data.getAktier()) {
                 if (d.getTicker() == a.getTicker())
-                egetAktier.add(a);
+                    egetAktier.add(a);
             }
         }
     }
 
-    public Aktie printEgetAktier(){
-        for (Aktie a : egetAktier){
+    public Aktie printEgetAktier() {
+        for (Aktie a : egetAktier) {
             return a;
         }
         return null;
     }
+
+    public int MaengdeAktier() {
+        int i = 0;
+        transactionToAktie();
+        for (Aktie a : egetAktier) {
+            i++;
+        }
+        return i;
+    }
+
+
+
 
 
 
@@ -105,6 +121,7 @@ public class Portfolio {
         return "Balance: "+balance+ " Mængde: "+maengde+ " Ticker: "+ticker+ "Aktier eget: "+ "Profit/Loss: "+ calculateProfitLoss() + printEgetAktier();
 
     }
+
 
 
 }
