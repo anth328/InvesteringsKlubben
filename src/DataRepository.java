@@ -61,8 +61,9 @@ public class DataRepository {
                 float initial_cash_DKK = Float.parseFloat(userData[4]);
                 LocalDate created_at = LocalDate.parse(userData[5], formatter);
                 LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
+                UserRole role = UserRole.valueOf(userData[7]);
 
-                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
+                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated, role);
                 addUsers(user);
             }
 
@@ -246,10 +247,9 @@ public class DataRepository {
         }
 
         public void printAllTransactions () {
+            transactions();
             for (Transactions t : transactions) {
                 System.out.println(t);
-
-
             }
         }
 

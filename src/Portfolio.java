@@ -9,10 +9,11 @@ public class Portfolio {
     private float buyPrice;
     private float currentPrice;
 
-    private ArrayList<Aktie> egetAktier;
-    private ArrayList<Transactions> egneTransactions;
+    private ArrayList<Aktie> egetAktier = new ArrayList<>();
+    private ArrayList<Transactions> egneTransactions = new ArrayList<>();
     private DataRepository data = new DataRepository();
 
+    public Portfolio(){};
 
     public Portfolio(float balance, int maengde, String ticker, float buyPrice, float currentPrice) {
 
@@ -21,8 +22,6 @@ public class Portfolio {
         this.ticker = ticker;
         this.buyPrice = buyPrice;
         this.currentPrice = currentPrice;
-        egetAktier = new ArrayList<>();
-        egneTransactions = new ArrayList<>();
     }
 
     public float getBalance() {
@@ -50,6 +49,18 @@ public class Portfolio {
         return egetAktier;
     }
 
+    public void printEgneAktier(){
+        for (Aktie a : getEgneAktier()){
+            System.out.println(a);
+        }
+    }
+
+    public void printEgneAktier(User user){
+        for (Transactions t : egneTransactions){
+            System.out.println(t);
+        }
+    }
+
     public void addAktier(Aktie aktier) {
         egetAktier.add(aktier);
     }
@@ -74,7 +85,7 @@ public class Portfolio {
     }
 
     public void addUsersTransactionsToList(User user) {
-        data.readTransactionsFromFile();
+        data.transactions();
         for (Transactions d : data.getTransactions()) {
             if (d.getUserid() == user.getUser_id()) {
                 egneTransactions.add(d);
@@ -84,11 +95,11 @@ public class Portfolio {
 
     public void transactionToAktie() {
         data.stockMarket();
-
         for (Transactions d : egneTransactions) {
             for (Aktie a : data.getAktier()) {
-                if (d.getTicker() == a.getTicker())
+                if (d.getTicker().equals(a.getTicker())) {
                     egetAktier.add(a);
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ public class User extends Person {
     private float initial_cash_DKK;
     private LocalDate created_at;
     private LocalDate last_updated;
-    private UserRole userRole;
+    private UserRole role;
     private Portfolio portfolio;
 
 
@@ -17,17 +17,24 @@ public class User extends Person {
     ArrayList users = new ArrayList<>();
     DataRepository dataRepository;
 
-    public User(int user_id, String full_name, String email,LocalDate birth_date,float initial_cash_DKK,LocalDate created_at,LocalDate last_updated){
+    public User(){}
+
+    public User(int user_id, String full_name, String email,LocalDate birth_date,float initial_cash_DKK,LocalDate created_at,LocalDate last_updated, UserRole role){
         super(full_name,email,birth_date);
 
         this.user_id = user_id;
         this.initial_cash_DKK = initial_cash_DKK;
         this.created_at = created_at;
         this.last_updated = last_updated;
+        this.role = role;
     }
 
     public int getUser_id(){
         return user_id;
+    }
+
+    public UserRole getRole(User user){
+        return role;
     }
 
     public User UsernameMatch(){

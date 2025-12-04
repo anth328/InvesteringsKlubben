@@ -6,6 +6,8 @@ public abstract class Person {
     protected String email;
     protected LocalDate birth_date;
 
+    Person(){}
+
     Person(String full_name, String email, LocalDate birth_date){
         this.full_name = full_name;
         this.email = email;

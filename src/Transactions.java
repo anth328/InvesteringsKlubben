@@ -29,7 +29,7 @@ public class Transactions {
     }
 
     public String toString() {
-        return "Transaction ID: " + id + ", User ID: " + user_id + "Date: " + date + ", Ticker: " + ticker + ", Price: " + price + ", currency: " + currency + ", order_type: " + order_type + ", Quantity: " + quantity;
+        return "Transaction ID: " + id + ", User ID: " + user_id + " Date: " + date + ", Ticker: " + ticker + ", Price: " + price + ", currency: " + currency + ", order_type: " + order_type + ", Quantity: " + quantity;
     }
 
 
