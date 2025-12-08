@@ -84,6 +84,22 @@ public class Portfolio {
         return (maengde * aktiePrice) - (maengde * buyPrice);
     }
 
+    public float calculateAllProfitLoss(){
+        float  currentPrice = 0;
+        float buyPrice = 0;
+
+        if (egetAktier.isEmpty()){
+            return 0;
+        }
+        for (Aktie a : egetAktier){
+            buyPrice += a.getPrice();
+        }
+        for (Transactions t : egneTransactions){
+            currentPrice = t.getPris();
+        }
+        return (buyPrice-currentPrice)/currentPrice ;
+    }
+
     public void addUsersTransactionsToList(User user) {
         data.transactions();
         for (Transactions d : data.getTransactions()) {
