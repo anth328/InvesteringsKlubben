@@ -86,7 +86,7 @@ public class Portfolio {
             if (t.getOrder() == "buy") {
                 if (Objects.equals(t.getOrder(), "buy")) {
                     balance -= t.getPris();
-                } else balance += t.getPris();
+                }
                 if (Objects.equals(t.getOrder(), "sell")) {
                     balance += t.getPris();
                 }
