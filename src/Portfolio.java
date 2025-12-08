@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Portfolio {
 
@@ -82,10 +83,12 @@ public class Portfolio {
     public void calculateBalance(User user){
         float balance = user.getInitialCash();
         for (Transactions t : egneTransactions){
-            if(t.getOrder()=="buy"){
+            if(Objects.equals(t.getOrder(), "buy")){
                 balance -= t.getPris();
             }
-            else balance += t.getPris();
+            if (Objects.equals(t.getOrder(), "sell")){
+                balance += t.getPris();
+            }
         }
         setBalance(balance);
     }
