@@ -282,7 +282,29 @@ public class DataRepository {
                 System.out.println(t);
             }
         }
-    }
+
+    public void printAktierBasic() {
+    for (int i = 0; i < aktier.size(); i++) {
+        System.out.print((i + 1) + ": ");
+        aktier.get(i).printBasic();
+        }
+        }
+        public void printAktieFull(int index) {
+        if (index < 1 || index > aktier.size()) {
+            System.out.println("Ugyldigt valg");
+            return;
+        }
+            System.out.println(aktier.get(index - 1).toString());
+        }
+
+        }
+
+
+
+
+
+
+
 
 
 

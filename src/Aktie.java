@@ -35,6 +35,9 @@ public class Aktie {
         return price;
     }
 
+    public void printBasic() {
+        System.out.println("Navn: " +name+ " | Pris: " +price);
+    }
 
     @Override
 

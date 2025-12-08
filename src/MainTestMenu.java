@@ -39,8 +39,15 @@ public class MainTestMenu {
                 }
 
                 case 2: {
-                    data.printAktier();
-                    System.out.println("Vil du købe aktier?, tryk 4");
+                    data.printAktierBasic(); // viser alle aktier
+
+                    System.out.println("Vælg aktie nummer for at se alle detaljer:");
+                    Scanner sc2 = new Scanner(System.in);
+                    int index = sc2.nextInt();   // vælge aktie
+
+                    data.printAktieFull(index);
+
+                    System.out.println("Vil du købe aktier? Tryk 4");
                     break;
                 }
 
