@@ -114,7 +114,7 @@ public class Portfolio {
         for (Transactions t : egneTransactions){
             currentPrice = t.getPris();
         }
-        return (buyPrice-currentPrice)/currentPrice ;
+        return ((buyPrice-currentPrice)/currentPrice)*100;
     }
 
     public void addUsersTransactionsToList(User user) {
