@@ -1,7 +1,7 @@
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
-/*public static void main(String[] args){
+public static void main(String[] args){
     DataRepository transaction = new DataRepository();
 
     Transactions t1 = new Transactions(1, 10, "AAPL", 150, 5, 1, 20240101, 1, null);
@@ -18,4 +18,4 @@ import java.time.LocalDate;
     System.out.println("Transaktion gemt i transactions.csv");
 
 
-}*/
+}

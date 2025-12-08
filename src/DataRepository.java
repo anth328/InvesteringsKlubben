@@ -61,9 +61,8 @@ public class DataRepository {
                 float initial_cash_DKK = Float.parseFloat(userData[4]);
                 LocalDate created_at = LocalDate.parse(userData[5], formatter);
                 LocalDate lastUpdated = LocalDate.parse(userData[6], formatter);
-                UserRole role = UserRole.valueOf(userData[7]);
 
-                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated, role);
+                user = new User(user_id, full_name, email, birth_date, initial_cash_DKK, created_at, lastUpdated);
                 addUsers(user);
             }
 
@@ -89,7 +88,7 @@ public class DataRepository {
                 addValuta(valuta);
             }
         } catch (IOException e) {
-            System.out.println("Error: fejl i currency.csv");
+            System.out.println("Error: fejl i stockmarket.csv");
             ;
         }
     }
@@ -114,7 +113,7 @@ public class DataRepository {
                  addBonds(bond);
             }
         } catch (IOException e) {
-            System.out.println("Error: fejl i bondMarket.csv");
+            System.out.println("Error: fejl i stockmarket.csv");
         }
     }
 
@@ -129,8 +128,8 @@ public class DataRepository {
                             t.getMaengde() + ";" +
                             t.getValuta() + ";" +
                             t.getDato() + ";" +
-                            t.getOrder() + ";"
-                            //t.getSalg()//
+                            t.getOrder() + ";" +
+                            t.getSalg()
             );
             writer.newLine();
         } catch (IOException e) {
@@ -139,36 +138,13 @@ public class DataRepository {
     }
 
 
-    public void transactions() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
-            String line = br.readLine();
-            Transactions transaction = null;
-            while ((line = br.readLine()) != null) {
-                String[] transactionData = line.split(semiColon);
-                int id = Integer.parseInt(transactionData[0]);
-                int user_id = Integer.parseInt(transactionData[1]);
-                LocalDate date = LocalDate.parse(transactionData[2], formatter);
-                String ticker = transactionData[3];
-                float price = Float.parseFloat(transactionData[4].replace(",", "."));
-                String currency = transactionData[5];
-                String order_type = transactionData[6];
-                int quantity = Integer.parseInt(transactionData[7]);
-                transaction = new Transactions(id, user_id, date, ticker, price, currency, order_type, quantity);
-                addTransaction(transaction);
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error: fejl i bondMarket.csv");
-        }
-    }
 
     /*
     Oprette en ArrayList og initierere den
     Lave en add metode til at tilføje en transaktion til ArrayListen
     en metode til at læse transaktioner fra en fil
      */
-   /* public void readTransactionsFromFile() {
+    public void readTransactionsFromFile() {
         try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;  br.readLine();
             while ((line = br.readLine()) != null) {
@@ -191,7 +167,7 @@ public class DataRepository {
             System.out.println("Fejl ved læsning af fil: " + e.getMessage());
         }
     }
-*/
+
 
     public DataRepository() {
             aktier = new ArrayList<>();
@@ -247,9 +223,10 @@ public class DataRepository {
         }
 
         public void printAllTransactions () {
-            transactions();
             for (Transactions t : transactions) {
                 System.out.println(t);
+
+
             }
         }
 
@@ -265,26 +242,5 @@ public class DataRepository {
                 bonds.add(bond);
         }
 
-        public void printAktier() {
-            for (Aktie aktier : aktier) {
-                System.out.println(aktier);
-            }
-        }
-        public void printBonds() {
-            for(Bond b: bonds)
-            {
-                System.out.println(bonds);
-            }
-        }
-        public void printTransactions()
-        {
-            for(Transactions t: transactions){
-                System.out.println(t);
-            }
-        }
     }
-
-
-
-
 

@@ -1,37 +1,37 @@
-import java.time.LocalDate;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Transactions {
     private int id;
-    private int user_id;
-    private LocalDate date;
+    private int userid;
     private String ticker;
-    private Float price;
-    private String currency;
-    private String order_type;
-    private int quantity;
-    //private Salg salg;//
+    private Float pris;
+    private int maengde;
+    private float valuta;
+    private int dato;
+    private int order;
+    private Salg salg;
 
     ArrayList<Aktie> Aktier = new ArrayList<>();
 
     public Transactions() {
     }
 
-    public Transactions(int id, int user_id, LocalDate date, String ticker, float price, String currency, String order_type, int quantity) {
+    public Transactions(int id, int userid, String ticker, float pris, int maengde, float valuta, int dato, int order, Salg salg) {
         this.id = id;
-        this.user_id = user_id;
+        this.userid = userid;
         this.ticker = ticker;
-        this.price = price;
-        this.currency = currency;
-        this.date = date;
-        this.order_type = order_type;
-        this.quantity = quantity;
+        this.pris = pris;
+        this.maengde = maengde;
+        this.valuta = valuta;
+        this.dato = dato;
+        this.order = order;
+        this.salg = salg;
     }
 
     public String toString() {
-        return "Transaction ID: " + id + ", User ID: " + user_id + " Date: " + date + ", Ticker: " + ticker + ", Price: " + price + ", currency: " + currency + ", order_type: " + order_type + ", Quantity: " + quantity;
+        return "Transaction ID: " + id + ", User ID: " + userid + ", Ticker: " + ticker + ", Pris: " + pris + ", Mængde: " + maengde + ", Valuta: " + valuta + ", Dato: " + dato + ", Ordre: " + order + ", Salg Info: " + salg;
     }
-
 
 
     public int getId(){
@@ -39,7 +39,7 @@ public class Transactions {
     }
 
     public int getUserid(){
-        return user_id;
+        return userid;
     }
 
     public String getTicker(){
@@ -47,26 +47,27 @@ public class Transactions {
     }
 
     public float getPris(){
-        return price;
+        return pris;
     }
 
     public int getMaengde(){
-        return quantity;
+        return maengde;
     }
 
-    public String getValuta(){
-        return currency;
+    public float getValuta(){
+        return valuta;
     }
 
-    public LocalDate getDato(){
-        return date;
+    public int getDato(){
+        return dato;
     }
 
-    public String getOrder(){
-        return order_type;
+    public int getOrder(){
+        return order;
     }
 
-    //public Salg getSalg(){
-        //return salg;
+    public Salg getSalg(){
+        return salg;
     }
 
+}
