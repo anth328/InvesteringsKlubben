@@ -44,6 +44,9 @@ public class Portfolio {
         return currentPrice;
     }
 
+    public void setBalance(float balance){
+        this.balance = balance;
+    }
 
     public ArrayList<Aktie> getEgneAktier() {
         return egetAktier;
@@ -74,6 +77,17 @@ public class Portfolio {
             return 0;
         }
         return egetAktier.get(0).getPrice();
+    }
+
+    public void calculateBalance(User user){
+        float balance = user.getInitialCash();
+        for (Transactions t : egneTransactions){
+            if(t.getOrder()=="buy"){
+                balance -= t.getPris();
+            }
+            else balance += t.getPris();
+        }
+        setBalance(balance);
     }
 
     public float calculateProfitLoss() {

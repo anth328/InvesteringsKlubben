@@ -33,6 +33,10 @@ public class User extends Person {
         return user_id;
     }
 
+    public float getInitialCash(){
+        return initial_cash_DKK;
+    }
+
     public UserRole getRole(User user){
         return role;
     }
