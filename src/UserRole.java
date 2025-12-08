@@ -1,3 +1,3 @@
 public enum UserRole {
-    Leder,Bruger;
+    leder,bruger;
 }

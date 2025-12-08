@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
 public class Aktie {
@@ -23,6 +24,10 @@ public class Aktie {
         this.dividendYield = dividendYield;
         this.market = market;
         this.lastUpdated = lastUpdated;
+    }
+
+    public String getTicker(){
+        return ticker;
     }
 
 
