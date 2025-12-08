@@ -25,6 +25,7 @@ public class MainTestMenu {
         System.out.println("Nu kan du indtaste et tal for at bruge programmets funktioner");
         System.out.println("Skriv 1 for hjælp");
         while (menuRun){
+            portfolio.calculateBalance(aktiveUser);
             Scanner sc = new Scanner(System.in);
             int valg = sc.nextInt();
             switch(valg){

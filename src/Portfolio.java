@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Portfolio {
 
@@ -44,6 +45,9 @@ public class Portfolio {
         return currentPrice;
     }
 
+    public void setBalance(float balance){
+        this.balance = balance;
+    }
 
     public ArrayList<Aktie> getEgneAktier() {
         return egetAktier;
@@ -74,6 +78,21 @@ public class Portfolio {
             return 0;
         }
         return egetAktier.get(0).getPrice();
+    }
+
+    public void calculateBalance(User user) {
+        float balance = user.getInitialCash();
+        for (Transactions t : egneTransactions) {
+            if (t.getOrder() == "buy") {
+                if (Objects.equals(t.getOrder(), "buy")) {
+                    balance -= t.getPris();
+                } else balance += t.getPris();
+                if (Objects.equals(t.getOrder(), "sell")) {
+                    balance += t.getPris();
+                }
+            }
+            setBalance(balance);
+        }
     }
 
     public float calculateProfitLoss() {
