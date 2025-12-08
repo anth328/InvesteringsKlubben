@@ -40,24 +40,30 @@ public class User extends Person {
     public User UsernameMatch(){
         DataRepository data = new DataRepository();
         data.bruger();
+        boolean loop = true;
 
-        System.out.println("Velkommen til Investerings Klubben");
-        System.out.println("Skriv mail for at login: ");
 
-        String mail = sc.nextLine();
+        while (loop) {
+            System.out.println("Velkommen til Investerings Klubben");
+            System.out.println("Skriv mail for at login: ");
 
-        for (User u : data.getUsers()){
-            if (Objects.equals(mail, u.getEMail())){
-                System.out.println("Bruger ID:");
-                int id = sc.nextInt();
+            String mail = sc.nextLine();
 
-                if(id == u.getUser_id()) {
-                    System.out.println("Login successful");
-                    return u;
+            for (User u : data.getUsers()) {
+                if (Objects.equals(mail, u.getEMail())) {
+                    System.out.println("Bruger ID:");
+                    int id = sc.nextInt();
+
+                    if (id == u.getUser_id()) {
+                        System.out.println("Login successful");
+                        loop = false;
+                        return u;
+                    }
                 }
             }
+            System.out.println("Failed Login Try Again");
         }
-        System.out.println("Failed Login Try Again");
+        System.out.println("Error!");
         return null;
     }
 
