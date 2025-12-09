@@ -10,17 +10,10 @@ public class MainTestMenu {
         data.bonds();
         data.transactions();
 
-
         Portfolio portfolio = new Portfolio(data);
 
-        //User user = new User(0,"","",date,100000,date,date,UserRole.leder);
         User user = new User();
         User aktiveUser = user.UsernameMatch();
-
-        portfolio.addUsersTransactionsToList(aktiveUser);
-        portfolio.transactionToAktie();
-        portfolio.calculateBalance(aktiveUser);
-
 
         boolean menuRun = true;
 
@@ -28,6 +21,8 @@ public class MainTestMenu {
         System.out.println("Nu kan du indtaste et tal for at bruge programmets funktioner");
         System.out.println("Skriv 1 for hjælp");
         while (menuRun){
+            portfolio.addUsersTransactionsToList(aktiveUser);
+            portfolio.transactionToAktie();
             portfolio.calculateBalance(aktiveUser);
             Scanner sc = new Scanner(System.in);
             int valg = sc.nextInt();
@@ -40,6 +35,7 @@ public class MainTestMenu {
                     System.out.println("5: Vis alle transaktioner");
                     System.out.println("6: Se Aktier som du investere!");
                     System.out.println("7: Sælg aktier");
+                    System.out.println("8: Se rank");
                     break;
                 }
 
@@ -122,12 +118,12 @@ public class MainTestMenu {
                     break;
                 }
 
+                case 8: {
+                    portfolio.rankList();
+                    break;
+                }
+
             }
         }
-
-
-
-
-
     }
 }

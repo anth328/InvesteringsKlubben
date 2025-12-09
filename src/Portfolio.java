@@ -17,15 +17,10 @@ public class Portfolio {
 
     public Portfolio(DataRepository data){
         this.data = data;
-    };
+    }
 
-    public Portfolio(float balance, int maengde, String ticker, float buyPrice, float currentPrice) {
-
+    public Portfolio(float balance) {
         this.balance = balance;
-        this.maengde = maengde;
-        this.ticker = ticker;
-        this.buyPrice = buyPrice;
-        this.currentPrice = currentPrice;
     }
 
     public float getBalance() {
@@ -162,7 +157,7 @@ public class Portfolio {
 
 
     public void addUsersTransactionsToList(User user) {
-        data.transactions();
+        egneTransactions.clear();
         for (Transactions d : data.getTransactions()) {
             if (d.getUserid() == user.getUser_id()) {
                 egneTransactions.add(d);
@@ -171,7 +166,7 @@ public class Portfolio {
     }
 
     public void transactionToAktie() {
-        data.stockMarket();
+        egetAktier.clear();
         for (Transactions d : egneTransactions) {
             for (Aktie a : data.getAktier()) {
                 if (d.getTicker().equals(a.getTicker())) {
