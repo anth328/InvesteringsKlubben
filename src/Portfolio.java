@@ -1,7 +1,9 @@
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.Collections;
 
 public class Portfolio {
 
@@ -10,17 +12,27 @@ public class Portfolio {
     private String ticker;
     private float buyPrice;
     private float currentPrice;
+    private float profit;
 
     private ArrayList<Aktie> egetAktier = new ArrayList<>();
     private ArrayList<Transactions> egneTransactions = new ArrayList<>();
+    private ArrayList<Portfolio> rankList = new ArrayList<>();
+
     private DataRepository data;
+    private User user;
 
     public Portfolio(DataRepository data){
         this.data = data;
     }
 
-    public Portfolio(float balance) {
+    public Portfolio(User user, float balance,float profit) {
+        this.user = user;
         this.balance = balance;
+        this.profit = profit;
+    }
+
+    public float getProfit(){
+        return profit;
     }
 
     public float getBalance() {
@@ -302,7 +314,6 @@ public class Portfolio {
 
     public void rankList() {
         float profit = 0;
-        ArrayList<String> rankList = new ArrayList<>();
 
         if (data.getUsers().isEmpty()) {
             data.bruger();
@@ -310,24 +321,19 @@ public class Portfolio {
 
         for (User u : data.getUsers()) {
             profit = (int) calculateAllProfitLoss(u);
-            rankList.add("Navn: " + u.getName() + " Profit: " + profit + "%");
+            Portfolio portfolio = new Portfolio(u,0,profit);
+            rankList.add(portfolio);
         }
-
-        for (String s : rankList) {
-            System.out.println(s);
+        rankList.sort(Comparator.comparing(Portfolio::getProfit).reversed());
+        for (Portfolio p : rankList){
+            System.out.println(p);
         }
     }
-
-
-
 
     @Override
 
     public String toString (){
-        return "Balance: "+balance+ " Mængde: "+maengde+ " Ticker: "+ticker+ "Aktier eget: "+ "Profit/Loss: "+ calculateProfitLoss() + printEgetAktier();
+        return "Navn: " + user.getName() + " Profit: " + profit;
 
     }
-
-
-
 }
