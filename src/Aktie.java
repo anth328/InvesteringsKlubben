@@ -12,9 +12,10 @@ public class Aktie {
     private String market;
     private LocalDate lastUpdated;
 
-    Aktie(){}
+    Aktie() {
+    }
 
-    public Aktie(String ticker, String name, String sector, float price, String currency, String rating, float dividendYield, String market,LocalDate lastUpdated){
+    public Aktie(String ticker, String name, String sector, float price, String currency, String rating, float dividendYield, String market, LocalDate lastUpdated) {
         this.ticker = ticker;
         this.name = name;
         this.sector = sector;
@@ -26,17 +27,17 @@ public class Aktie {
         this.lastUpdated = lastUpdated;
     }
 
-    public String getTicker(){
+    public String getTicker() {
         return ticker;
     }
 
 
-    public float getPrice(){
+    public float getPrice() {
         return price;
     }
 
     public void printBasic() {
-        System.out.println("Navn: " +name+ " | Pris: " +price);
+        System.out.println("Navn: " + name + " | Pris: " + price);
     }
 
     @Override

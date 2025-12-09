@@ -174,6 +174,8 @@ public class Portfolio {
         }
         return i;
     }
+
+
     public void buyAktie(User user, Aktie aktie, int quantity)
     {
         if (quantity <= 0) {
@@ -220,6 +222,66 @@ public class Portfolio {
 
 
 
+
+    public void sellAktie(User user, Aktie aktie, int quantity)
+    {
+        if (quantity <= 0) {
+            System.out.println("Ugyldigt antal.");
+            return;
+        }
+
+        // Tæl hvor mange bruger ejer af denne aktie
+        int owned = 0;
+        for (Aktie a : egetAktier) {
+            if (a.getTicker().equalsIgnoreCase(aktie.getTicker())) {
+                owned++;
+            }
+        }
+
+        // Kan ikke sælge mere end man ejer
+        if (owned < quantity) {
+            System.out.println("FEJL: Du kan ikke sælge " + quantity + " stk af " + aktie.getTicker() +
+                    " fordi du kun ejer " + owned);
+            return;
+        }
+
+        // Beregn total pris
+        float totalPrice = aktie.getPrice() * quantity;
+
+        // Læg penge til balance
+        balance += totalPrice;
+
+        // Fjern eget aktier fra listen
+        int removed = 0;
+        for (int i = 0; i < egetAktier.size() && removed < quantity; i++) {
+            if (egetAktier.get(i).getTicker().equalsIgnoreCase(aktie.getTicker())) {
+                egetAktier.remove(i);
+                i--;
+                removed++;
+            }
+        }
+
+        // Opret salgs-transaktion
+        Transactions transaction = new Transactions(
+                data.getTransactions().size() + 1,
+                user.getUser_id(),
+                LocalDate.now(),
+                aktie.getTicker(),
+                aktie.getPrice(),
+                "DKK",
+                "sell",
+                quantity
+        );
+
+        egneTransactions.add(transaction);
+        data.addTransaction(transaction);
+        data.saveTransactionToFile(transaction);
+
+        System.out.println("SALG GENNEMFØRT");
+        System.out.println("Du solgte " + quantity + " x " + aktie.getTicker());
+        System.out.println("Total pris: " + totalPrice);
+        System.out.println("Ny balance: " + balance);
+    }
 
 
 

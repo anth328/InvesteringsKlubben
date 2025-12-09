@@ -39,6 +39,7 @@ public class MainTestMenu {
                     System.out.println("4: Køb aktier");
                     System.out.println("5: Vis alle transaktioner");
                     System.out.println("6: Se Aktier som du investere!");
+                    System.out.println("7: Sælg aktier");
                     break;
                 }
 
@@ -96,6 +97,31 @@ public class MainTestMenu {
                     portfolio.printEgneAktier();
                     break;
                 }
+                case 7: {
+                    System.out.println("Indtast ticker du vil sælge:");
+                    Scanner scSell = new Scanner(System.in);
+                    String tickerSell = scSell.nextLine().toUpperCase();
+
+                    Aktie chosenSell = null;
+                    for (Aktie a : data.getAktier()) {
+                        if (a.getTicker().equalsIgnoreCase(tickerSell)) {
+                            chosenSell = a;
+                            break;
+                        }
+                    }
+
+                    if (chosenSell == null) {
+                        System.out.println("Aktie blev ikke fundet!");
+                        break;
+                    }
+
+                    System.out.println("Hvor mange vil du sælge?");
+                    int antalSell = scSell.nextInt();
+
+                    portfolio.sellAktie(aktiveUser, chosenSell, antalSell);
+                    break;
+                }
+
             }
         }
 
