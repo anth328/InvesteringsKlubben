@@ -30,6 +30,14 @@ public class Bond{
 
         }
 
+    public String getName() { return name; }
+
+
+    public void printBasicBond() {
+            System.out.println("Navn: " + name + " | Pris: " + price);
+    }
+
+
 
         @Override
 

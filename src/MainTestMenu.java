@@ -52,10 +52,19 @@ public class MainTestMenu {
                     break;
                 }
 
-                case 3: {
-                    data.printBonds();
-                    break;
-                }
+                    case 3: {
+                        data.printBonds();
+                        data.printBondsBasic();
+
+                        System.out.println("Vælg obligationsnummer for at se alle detaljer:");
+                        Scanner scBond = new Scanner(System.in);
+                        int indexBond = scBond.nextInt();
+
+                        data.printBondFull(indexBond);
+
+                        break;
+
+                    }
                 case 4: {
                     Scanner scanner = new Scanner(System.in);
                     scanner.nextLine();

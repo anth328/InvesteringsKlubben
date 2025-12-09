@@ -299,6 +299,24 @@ public class DataRepository {
             System.out.println(aktier.get(index - 1).toString());
         }
 
+    public void printBondsBasic() {
+        for (int i = 0; i < bonds.size(); i++) {
+            System.out.print((i + 1) + ": ");
+            bonds.get(i).printBasicBond();
+        }
+    }
+
+        public void printBondFull(int index) {
+        if (index < 1 || index > bonds.size()) {
+            System.out.println("Ugyldigt valg");
+            return;
+        }
+
+        System.out.println(bonds.get(index - 1).toString());
+    }
+
+
+
         }
 
 
