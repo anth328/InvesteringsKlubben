@@ -10,6 +10,7 @@ public class MainTestMenu {
         data.bonds();
         data.transactions();
 
+
         Portfolio portfolio = new Portfolio();
 
         //User user = new User(0,"","",date,100000,date,date,UserRole.leder);
@@ -18,6 +19,8 @@ public class MainTestMenu {
 
         portfolio.addUsersTransactionsToList(aktiveUser);
         portfolio.transactionToAktie();
+        portfolio.calculateBalance(aktiveUser);
+
 
         boolean menuRun = true;
 
@@ -56,10 +59,33 @@ public class MainTestMenu {
                     data.printBonds();
                     break;
                 }
-
                 case 4: {
+                    Scanner scanner = new Scanner(System.in);
+                    scanner.nextLine();
+
+                    System.out.println("Indtast ticker (fx AAPL):");
+                    String ticker = scanner.nextLine().toUpperCase();
+
+                    Aktie chosen = null;
+                    for (Aktie a : data.getAktier()) {
+                        if (a.getTicker().equalsIgnoreCase(ticker)) {
+                            chosen = a;
+                            break;
+                        }
+                    }
+
+                    if (chosen == null) {
+                        System.out.println("Aktie findes ikke!");
+                        break;
+                    }
+
+                    System.out.println("Indtast antal:");
+                    int antal = scanner.nextInt();
+
+                    portfolio.buyAktie(aktiveUser, chosen, antal);
                     break;
                 }
+
 
                 case 5: {
                     data.printTransactions();

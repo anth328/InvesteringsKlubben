@@ -18,6 +18,7 @@ public class Transactions {
     }
 
     public Transactions(int id, int user_id, LocalDate date, String ticker, float price, String currency, String order_type, int quantity) {
+
         this.id = id;
         this.user_id = user_id;
         this.ticker = ticker;
@@ -46,15 +47,15 @@ public class Transactions {
         return ticker;
     }
 
-    public float getPris(){
+    public float getPrice(){
         return price;
     }
 
-    public int getMaengde(){
+    public int getQuantity(){
         return quantity;
     }
 
-    public String getValuta(){
+    public String getCurrency(){
         return currency;
     }
 

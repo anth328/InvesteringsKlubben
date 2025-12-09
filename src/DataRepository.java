@@ -120,17 +120,19 @@ public class DataRepository {
 
 
     public void saveTransactionToFile(Transactions t) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true))) {
             writer.write(
                     t.getId() + ";" +
                             t.getUserid() + ";" +
+                            t.getDato().format(formatter) + ";" +
                             t.getTicker() + ";" +
-                            t.getPris() + ";" +
-                            t.getMaengde() + ";" +
-                            t.getValuta() + ";" +
-                            t.getDato() + ";" +
-                            t.getOrder() + ";"
+                            t.getPrice() + ";" +
+                            t.getCurrency() + ";" +
+                            t.getOrder() + ";" +
+                            t.getQuantity() + ";"
                             //t.getSalg()//
+
             );
             writer.newLine();
         } catch (IOException e) {
@@ -159,7 +161,7 @@ public class DataRepository {
 
             }
         } catch (IOException e) {
-            System.out.println("Error: fejl i bondMarket.csv");
+            System.out.println("Error: fejl i transactions.csv");
         }
     }
 
@@ -216,7 +218,7 @@ public class DataRepository {
             return portfolioList;
         }
 
-        public ArrayList<Valuta> getValutaer () {
+        public ArrayList<Valuta> getCurrency() {
             return valutaer;
         }
 

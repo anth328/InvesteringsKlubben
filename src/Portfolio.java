@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -80,20 +81,39 @@ public class Portfolio {
         return egetAktier.get(0).getPrice();
     }
 
-    public void calculateBalance(User user) {
+   /* public void calculateBalance(User user) {
         float balance = user.getInitialCash();
         for (Transactions t : egneTransactions) {
-            if (t.getOrder() == "buy") {
-                if (Objects.equals(t.getOrder(), "buy")) {
-                    balance -= t.getPris();
+            if (t.getOrder().equalsIgnoreCase("buy"))
+            {
+                    balance -= t.getPrice();
                 }
                 if (Objects.equals(t.getOrder(), "sell")) {
-                    balance += t.getPris();
+                    balance += t.getPrice();
                 }
             }
             setBalance(balance);
         }
+*/
+
+    public void calculateBalance(User user) {
+
+        float currentBalance = user.getInitialCash(); // startbeløb
+
+        for (Transactions t : egneTransactions) {
+
+            if (t.getOrder().equalsIgnoreCase("buy")) {
+                currentBalance -= t.getPrice() * t.getQuantity();
+            }
+
+            if (t.getOrder().equalsIgnoreCase("sell")) {
+                currentBalance += t.getPrice() * t.getQuantity();
+            }
+        }
+
+        setBalance(currentBalance);  // <-- KUN ÉN GANG, EFTER LOOP
     }
+
 
     public float calculateProfitLoss() {
         if (egetAktier.isEmpty()) {
@@ -114,7 +134,7 @@ public class Portfolio {
             buyPrice += a.getPrice();
         }
         for (Transactions t : egneTransactions){
-            currentPrice = t.getPris();
+            currentPrice = t.getPrice();
         }
         return (buyPrice-currentPrice)/currentPrice ;
     }
@@ -153,6 +173,49 @@ public class Portfolio {
             i++;
         }
         return i;
+    }
+    public void buyAktie(User user, Aktie aktie, int quantity)
+    {
+        if (quantity <= 0) {
+            System.out.println("Ugyldigt antal.");
+            return;
+        }
+
+        float totalPrice = aktie.getPrice() * quantity;
+
+        if (totalPrice > balance) {
+            System.out.println("Ikke nok penge til at købe " + quantity + " stk af " + aktie.getTicker());
+            return;
+        }
+
+        balance -= totalPrice;
+
+        // Tilføj aktier til portefølje
+        for (int i = 0; i < quantity; i++) {
+            egetAktier.add(aktie);
+        }
+
+        // Opret transaktion
+        Transactions transaction = new Transactions(
+                data.getTransactions().size() + 1,
+                user.getUser_id(),
+                LocalDate.now(),
+                aktie.getTicker(),
+                aktie.getPrice(),
+                "DKK",
+                "buy",
+                quantity
+        );
+
+        egneTransactions.add(transaction);
+        data.addTransaction(transaction);
+        data.saveTransactionToFile(transaction);
+
+
+        System.out.println("KØB GENNEMFØRT");
+        System.out.println("Du købte " + quantity + " x " + aktie.getTicker());
+        System.out.println("Total pris: " + totalPrice);
+        System.out.println("Ny balance: " + balance);
     }
 
 
