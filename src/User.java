@@ -37,7 +37,7 @@ public class User extends Person {
         return initial_cash_DKK;
     }
 
-    public UserRole getRole(User user){
+    public UserRole getRole(){
         return role;
     }
 
