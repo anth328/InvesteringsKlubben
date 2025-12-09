@@ -61,7 +61,7 @@ public class MainTestMenu {
                     }
 
                     case 3: {
-                        data.printBonds();
+                       
                         data.printBondsBasic();
 
                         System.out.println("Vælg obligationsnummer for at se alle detaljer:");
