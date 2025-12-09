@@ -6,18 +6,17 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.List;
 
 
 public class DataRepository {
 
     private ArrayList<Aktie> aktier;
     private ArrayList<Portfolio> portfolioList;
-    private ArrayList<Valuta> valutaer;
     private ArrayList<User> users;
     private ArrayList<Person> personer;
     private ArrayList<Bond> bonds;
     private ArrayList<Transactions> transactions;
+    private ArrayList<Currency> currencies;
     public static final String semiColon = ";";
 
     public void stockMarket() {
@@ -73,26 +72,6 @@ public class DataRepository {
         }
     }
 
-    public void valutaer() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))) {
-            String line = br.readLine();
-            Valuta valuta = null;
-            while ((line = br.readLine()) != null) {
-                String[] valutaData = line.split(semiColon);
-                String base_currency = valutaData[0];
-                String quote_currency = valutaData[1];
-                float rate = Float.parseFloat(valutaData[2].replace(",", "."));
-                LocalDate lastUpdated = LocalDate.parse(valutaData[3], formatter);
-
-                valuta = new Valuta(base_currency, quote_currency, rate, lastUpdated);
-                addValuta(valuta);
-            }
-        } catch (IOException e) {
-            System.out.println("Error: fejl i currency.csv");
-            ;
-        }
-    }
     public void bonds() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         try (BufferedReader br = new BufferedReader(new FileReader("bondMarket.csv"))) {
@@ -195,14 +174,37 @@ public class DataRepository {
     }
 */
 
+    public void currency(){
+        try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String line;
+
+            while ((line = br.readLine()) != null){
+
+                String[] part = line.split(semiColon);
+                String base_currency = part[0];
+                String quote_currency = part[1];
+                float rate = Float.parseFloat(part[2].replaceAll(",","."));
+                LocalDate last_updated = LocalDate.parse(part[3], formatter);
+
+                Currency currency = new Currency(base_currency,quote_currency,rate,last_updated);
+
+                addCurrency(currency);
+            }
+        }
+        catch(IOException e){
+            System.out.print("Failed to load " + e);
+        }
+    }
+
     public DataRepository() {
             aktier = new ArrayList<>();
             portfolioList = new ArrayList<>();
-            valutaer = new ArrayList<>();
             users = new ArrayList<>();
             personer = new ArrayList<>();
             transactions = new ArrayList<>();
             bonds = new ArrayList<>();
+            currencies = new ArrayList<>();
         }
 
         public void indlæs () {
@@ -218,8 +220,8 @@ public class DataRepository {
             return portfolioList;
         }
 
-        public ArrayList<Valuta> getCurrency() {
-            return valutaer;
+        public ArrayList<Currency> getCurrency() {
+            return currencies;
         }
 
         public ArrayList<User> getUsers () {
@@ -259,8 +261,8 @@ public class DataRepository {
             users.add(user);
         }
 
-        public void addValuta (Valuta valuta){
-            valutaer.add(valuta);
+        public void addCurrency (Currency currency){
+            currencies.add(currency);
         }
 
         public void addBonds (Bond bond){

@@ -31,6 +31,9 @@ public class Aktie {
         return ticker;
     }
 
+    public String getCurrency(){
+        return currency;
+    }
 
     public float getPrice() {
         return price;

@@ -24,3 +24,23 @@ BAKKO;Bavarian Nordic;Health Care;215;DKK;BB;0;Nasdaq Copenhagen;22-04-2025
 ALK-B;ALK-Abelló B;Health Care;1240;DKK;A-;0,9;Nasdaq Copenhagen;22-04-2025
 NKT;NKT A/S;Industrials;615;DKK;BBB+;1,4;Nasdaq Copenhagen;22-04-2025
 CHEMM;Chemometec;Health Care;895;DKK;BB;0;Nasdaq Copenhagen;22-04-2025
+SAP;SAP SE;Technology;178;EUR;A+;1,4;Xetra Frankfurt;22-04-2025
+AIR;Airbus SE;Industrials;145;EUR;A;1,2;Euronext Paris;22-04-2025
+ADYE;Adyen NV;Technology;1270;EUR;A-;0;Euronext Amsterdam;22-04-2025
+ASML;ASML Holding;Technology;915;EUR;AA-;0,9;Euronext Amsterdam;22-04-2025
+LVMH;LVMH Moët Hennessy;Consumer Goods;765;EUR;A+;2;Euronext Paris;22-04-2025
+SIE;Siemens AG;Industrials;152;EUR;A;2,5;Xetra Frankfurt;22-04-2025
+BNP;BNP Paribas;Financials;56;EUR;A-;6,1;Euronext Paris;22-04-2025
+ENEL;Enel SpA;Utilities;6,8;EUR;BBB+;5,8;Borsa Italiana;22-04-2025
+TTE;TotalEnergies SE;Energy;63;EUR;A;4,7;Euronext Paris;22-04-2025
+RIO;Rio Tinto;Materials;58;GBP;A-;7;London Stock Exchange;22-04-2025
+AAPL;Apple Inc;Technology;185;USD;AA+;0,5;NASDAQ;22-04-2025
+MSFT;Microsoft Corp;Technology;430;USD;AAA;0,8;NASDAQ;22-04-2025
+JNJ;Johnson & Johnson;Health Care;158;USD;AA;2,9;NYSE;22-04-2025
+XOM;Exxon Mobil;Energy;120;USD;A;3,4;NYSE;22-04-2025
+NVDA;NVIDIA Corp;Technology;950;USD;A+;0,02;NASDAQ;22-04-2025
+AMZN;Amazon.com;Consumer Services;182;USD;A;0;NASDAQ;22-04-2025
+PG;Procter & Gamble;Consumer Goods;168;USD;AA-;2,5;NYSE;22-04-2025
+UNH;UnitedHealth Group;Health Care;465;USD;A+;1,3;NYSE;22-04-2025
+KO;Coca-Cola;Consumer Goods;63;USD;A;3,1;NYSE;22-04-2025
+BA;Boeing Co;Industrials;175;USD;BBB-;0;NYSE;22-04-2025
