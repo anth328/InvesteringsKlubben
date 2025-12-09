@@ -11,7 +11,7 @@ public class MainTestMenu {
         data.transactions();
 
 
-        Portfolio portfolio = new Portfolio();
+        Portfolio portfolio = new Portfolio(data);
 
         //User user = new User(0,"","",date,100000,date,date,UserRole.leder);
         User user = new User();

@@ -41,27 +41,36 @@ public class User extends Person {
         return role;
     }
 
+    public String getName(){
+        return full_name;
+    }
+
+
     public User UsernameMatch(){
         DataRepository data = new DataRepository();
         data.bruger();
 
         System.out.println("Velkommen til Investerings Klubben");
         System.out.println("Skriv mail for at login: ");
+        boolean loop = true;
 
-        String mail = sc.nextLine();
+        while(loop) {
+            String mail = sc.nextLine();
 
-        for (User u : data.getUsers()){
-            if (Objects.equals(mail, u.getEMail())){
-                System.out.println("Bruger ID:");
-                int id = sc.nextInt();
+            for (User u : data.getUsers()) {
+                if (Objects.equals(mail, u.getEMail())) {
+                    System.out.println("Bruger ID:");
+                    int id = sc.nextInt();
 
-                if(id == u.getUser_id()) {
-                    System.out.println("Login successful");
-                    return u;
+                    if (id == u.getUser_id()) {
+                        System.out.println("Login successful");
+                        return u;
+                    }
                 }
             }
+            System.out.println("Failed Login Try Again");
         }
-        System.out.println("Failed Login Try Again");
+        System.out.println("Error");
         return null;
     }
 

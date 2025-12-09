@@ -13,9 +13,11 @@ public class Portfolio {
 
     private ArrayList<Aktie> egetAktier = new ArrayList<>();
     private ArrayList<Transactions> egneTransactions = new ArrayList<>();
-    private DataRepository data = new DataRepository();
+    private DataRepository data;
 
-    public Portfolio(){};
+    public Portfolio(DataRepository data){
+        this.data = data;
+    };
 
     public Portfolio(float balance, int maengde, String ticker, float buyPrice, float currentPrice) {
 
@@ -123,21 +125,41 @@ public class Portfolio {
         return (maengde * aktiePrice) - (maengde * buyPrice);
     }
 
-    public float calculateAllProfitLoss(){
-        float  currentPrice = 0;
-        float buyPrice = 0;
+    public float calculateAllProfitLoss(User user){
+        addUsersTransactionsToList(user);
+        transactionToAktie();
 
-        if (egetAktier.isEmpty()){
-            return 0;
+        float totalBuyValue = 0f;
+        float totalCurrentValue = 0f;
+
+        for (int i = 0; i < egneTransactions.size(); i++) {
+            Transactions t = egneTransactions.get(i);
+
+            Aktie matchingAktie = null;
+            for (Aktie a : data.getAktier()) {
+                if (a.getTicker().equals(t.getTicker())) {
+                    matchingAktie = a;
+                    break;
+                }
+            }
+            if (matchingAktie == null) {
+                continue;
+            }
+
+            float transactionPrice = t.getPrice();
+            float marketPrice = matchingAktie.getPrice();
+
+            if ("buy".equalsIgnoreCase(t.getOrder())) {
+                totalBuyValue += transactionPrice;
+                totalCurrentValue += marketPrice;
+            } else if ("sell".equalsIgnoreCase(t.getOrder())) {
+                totalBuyValue -= transactionPrice;
+                totalCurrentValue -= marketPrice;
+            }
         }
-        for (Aktie a : egetAktier){
-            buyPrice += a.getPrice();
-        }
-        for (Transactions t : egneTransactions){
-            currentPrice = t.getPrice();
-        }
-        return (buyPrice-currentPrice)/currentPrice ;
+        return ((totalCurrentValue - totalBuyValue)/totalBuyValue) * 100;
     }
+
 
     public void addUsersTransactionsToList(User user) {
         data.transactions();
@@ -281,6 +303,24 @@ public class Portfolio {
         System.out.println("Du solgte " + quantity + " x " + aktie.getTicker());
         System.out.println("Total pris: " + totalPrice);
         System.out.println("Ny balance: " + balance);
+    }
+
+    public void rankList() {
+        float profit = 0;
+        ArrayList<String> rankList = new ArrayList<>();
+
+        if (data.getUsers().isEmpty()) {
+            data.bruger();
+        }
+
+        for (User u : data.getUsers()) {
+            profit = (int) calculateAllProfitLoss(u);
+            rankList.add("Navn: " + u.getName() + " Profit: " + profit + "%");
+        }
+
+        for (String s : rankList) {
+            System.out.println(s);
+        }
     }
 
 
