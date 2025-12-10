@@ -36,31 +36,19 @@ public class MainTestMenu {
                 portfolio.calculateBalance(aktiveUser);
 
                 System.out.println("\n=== HOVEDMENU ===");
-                System.out.println("1: Hjælp");
-                System.out.println("2: Se aktiemarkedet");
-                System.out.println("3: Se obligationer");
-                System.out.println("4: Køb aktier");
-                System.out.println("5: Vis alle transaktioner");
-                System.out.println("6: Se dine aktier");
-                System.out.println("7: Sælg aktier");
-                System.out.println("8: Se rank");
+                System.out.println("1: Se aktiemarkedet");
+                System.out.println("2: Se obligationer");
+                System.out.println("3: Køb aktier");
+                System.out.println("4: Vis alle transaktioner");
+                System.out.println("5: Se dine aktier");
+                System.out.println("6: Sælg aktier");
+                System.out.println("7: Se rank");
 
                 int valg = readInt(sc, "Vælg: ");
 
                 switch (valg) {
-                    case 1 -> {
-                        System.out.println("1: for hjælp");
-                        System.out.println("2: Se aktiemarkedet");
-                        System.out.println("3: Se obligationer");
-                        System.out.println("4: Køb aktier");
-                        System.out.println("5: Vis alle transaktioner");
-                        System.out.println("6: Se Aktier som du investerer!");
-                        System.out.println("7: Sælg aktier");
-                        System.out.println("8: Se rank");
-                        pause(sc);
-                    }
 
-                    case 2 -> {
+                    case 1 -> {
                         data.printAktierBasic();
                         int index = readInt(sc, "Vælg aktie nummer (Enter for tilbage): ");
                         if (index != 0) data.printAktieFull(index);
@@ -68,14 +56,14 @@ public class MainTestMenu {
                         pause(sc);
                     }
 
-                    case 3 -> {
+                    case 2 -> {
                         data.printBondsBasic();
                         int indexBond = readInt(sc, "Vælg obligationsnummer (Enter for tilbage): ");
                         if (indexBond != 0) data.printBondFull(indexBond);
                         pause(sc);
                     }
 
-                    case 4 -> {
+                    case 3 -> {
                         String ticker = readString(sc, "Indtast ticker (Enter for tilbage): ").toUpperCase();
                         if (ticker.isEmpty()) break;
 
@@ -100,17 +88,17 @@ public class MainTestMenu {
                         pause(sc);
                     }
 
-                    case 5 -> {
+                    case 4 -> {
                         data.printTransactions();
                         pause(sc);
                     }
 
-                    case 6 -> {
+                    case 5 -> {
                         portfolio.printEgneAktier();
                         pause(sc);
                     }
 
-                    case 7 -> {
+                    case 6 -> {
                         String tickerSell = readString(sc, "Indtast ticker du vil sælge (Enter for tilbage): ").toUpperCase();
                         if (tickerSell.isEmpty()) break;
 
@@ -135,7 +123,7 @@ public class MainTestMenu {
                         pause(sc);
                     }
 
-                    case 8 -> {
+                    case 7 -> {
                         portfolio.rankList();
                         pause(sc);
                     }
