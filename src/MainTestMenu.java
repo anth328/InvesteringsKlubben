@@ -20,65 +20,64 @@ public class MainTestMenu {
         if (aktiveUser.getRole() == UserRole.leder) {
             lederMenu(user, data, portfolio);
 
-
         } else {
 
             boolean menuRun = true;
 
             System.out.println("Velkommen til Investerings klubben: " + aktiveUser.getFullname());
-            System.out.println("Nu kan du indtaste et tal for at bruge programmets funktioner");
+            System.out.println("Indtast et tal for at bruge programmets funktioner");
             System.out.println("Skriv 1 for hjælp");
+
+            Scanner sc = new Scanner(System.in);
+
             while (menuRun) {
                 portfolio.addUsersTransactionsToList(aktiveUser);
                 portfolio.transactionToAktie();
                 portfolio.calculateBalance(aktiveUser);
-                Scanner sc = new Scanner(System.in);
-                int valg = sc.nextInt();
+
+                System.out.println("\n=== HOVEDMENU ===");
+                System.out.println("1: Hjælp");
+                System.out.println("2: Se aktiemarkedet");
+                System.out.println("3: Se obligationer");
+                System.out.println("4: Køb aktier");
+                System.out.println("5: Vis alle transaktioner");
+                System.out.println("6: Se dine aktier");
+                System.out.println("7: Sælg aktier");
+                System.out.println("8: Se rank");
+
+                int valg = readInt(sc, "Vælg: ");
+
                 switch (valg) {
-                    case 1: {
+                    case 1 -> {
                         System.out.println("1: for hjælp");
                         System.out.println("2: Se aktiemarkedet");
                         System.out.println("3: Se obligationer");
                         System.out.println("4: Køb aktier");
                         System.out.println("5: Vis alle transaktioner");
-                        System.out.println("6: Se Aktier som du investere!");
+                        System.out.println("6: Se Aktier som du investerer!");
                         System.out.println("7: Sælg aktier");
                         System.out.println("8: Se rank");
-                        break;
+                        pause(sc);
                     }
 
-                    case 2: {
-                        data.printAktierBasic(); // viser alle aktier
-
-                        System.out.println("Vælg aktie nummer for at se alle detaljer:");
-                        Scanner sc2 = new Scanner(System.in);
-                        int index = sc2.nextInt();   // vælge aktie
-
-                        data.printAktieFull(index);
-
+                    case 2 -> {
+                        data.printAktierBasic();
+                        int index = readInt(sc, "Vælg aktie nummer (Enter for tilbage): ");
+                        if (index != 0) data.printAktieFull(index);
                         System.out.println("Vil du købe aktier? Tryk 4");
-                        break;
+                        pause(sc);
                     }
 
-                    case 3: {
-
+                    case 3 -> {
                         data.printBondsBasic();
-
-                        System.out.println("Vælg obligationsnummer for at se alle detaljer:");
-                        Scanner scBond = new Scanner(System.in);
-                        int indexBond = scBond.nextInt();
-
-                        data.printBondFull(indexBond);
-
-                        break;
-
+                        int indexBond = readInt(sc, "Vælg obligationsnummer (Enter for tilbage): ");
+                        if (indexBond != 0) data.printBondFull(indexBond);
+                        pause(sc);
                     }
-                    case 4: {
-                        Scanner scanner = new Scanner(System.in);
-                        scanner.nextLine();
 
-                        System.out.println("Indtast ticker (fx AAPL):");
-                        String ticker = scanner.nextLine().toUpperCase();
+                    case 4 -> {
+                        String ticker = readString(sc, "Indtast ticker (Enter for tilbage): ").toUpperCase();
+                        if (ticker.isEmpty()) break;
 
                         Aktie chosen = null;
                         for (Aktie a : data.getAktier()) {
@@ -90,30 +89,30 @@ public class MainTestMenu {
 
                         if (chosen == null) {
                             System.out.println("Aktie findes ikke!");
+                            pause(sc);
                             break;
                         }
 
-                        System.out.println("Indtast antal:");
-                        int antal = scanner.nextInt();
+                        int antal = readInt(sc, "Indtast antal (Enter for tilbage): ");
+                        if (antal == 0) break;
 
                         portfolio.buyAktie(aktiveUser, chosen, antal);
-                        break;
+                        pause(sc);
                     }
 
-
-                    case 5: {
+                    case 5 -> {
                         data.printTransactions();
-                        break;
+                        pause(sc);
                     }
 
-                    case 6: {
+                    case 6 -> {
                         portfolio.printEgneAktier();
-                        break;
+                        pause(sc);
                     }
-                    case 7: {
-                        System.out.println("Indtast ticker du vil sælge:");
-                        Scanner scSell = new Scanner(System.in);
-                        String tickerSell = scSell.nextLine().toUpperCase();
+
+                    case 7 -> {
+                        String tickerSell = readString(sc, "Indtast ticker du vil sælge (Enter for tilbage): ").toUpperCase();
+                        if (tickerSell.isEmpty()) break;
 
                         Aktie chosenSell = null;
                         for (Aktie a : data.getAktier()) {
@@ -125,25 +124,54 @@ public class MainTestMenu {
 
                         if (chosenSell == null) {
                             System.out.println("Aktie blev ikke fundet!");
+                            pause(sc);
                             break;
                         }
 
-                        System.out.println("Hvor mange vil du sælge?");
-                        int antalSell = scSell.nextInt();
+                        int antalSell = readInt(sc, "Hvor mange vil du sælge? (Enter for tilbage): ");
+                        if (antalSell == 0) break;
 
                         portfolio.sellAktie(aktiveUser, chosenSell, antalSell);
-                        break;
+                        pause(sc);
                     }
 
-                    case 8: {
+                    case 8 -> {
                         portfolio.rankList();
-                        break;
+                        pause(sc);
                     }
 
+                    default -> {
+                        System.out.println("Try again!");
+                        pause(sc);
+                    }
                 }
             }
         }
+    }
 
+
+    private static int readInt(Scanner sc, String message) {
+        while (true) {
+            System.out.print(message);
+            String input = sc.nextLine().trim();
+            if (input.isEmpty()) return 0;
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Try again!");
+            }
+        }
+    }
+
+    private static String readString(Scanner sc, String message) {
+        System.out.print(message);
+        return sc.nextLine().trim();
+    }
+
+
+    private static void pause(Scanner sc) {
+        System.out.println("\nTryk Enter for at vende tilbage til menuen...");
+        sc.nextLine();
     }
 
 
