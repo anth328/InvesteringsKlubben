@@ -336,4 +336,10 @@ public class Portfolio {
         return "Navn: " + user.getName() + " Profit: " + profit;
 
     }
+
+    public void printAllPortfolios() {
+        for (Portfolio p : rankList) {
+            System.out.println(p);
+        }
+    }
 }

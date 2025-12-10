@@ -61,7 +61,7 @@ public class MainTestMenu {
                     }
 
                     case 3: {
-                       
+
                         data.printBondsBasic();
 
                         System.out.println("Vælg obligationsnummer for at se alle detaljer:");
@@ -174,6 +174,7 @@ public class MainTestMenu {
             switch(valg){
 
                 case 1: {
+                    data.printUsers();
 
                     break;
                 }
@@ -186,15 +187,15 @@ public class MainTestMenu {
                     break;
                 }
                 case 4: {
-
+                    portfolio.printAllPortfolios();
                     break;
                 }
                 case 5: {
-
+                    portfolio.rankList();
                     break;
                 }
                 case 6: {
-
+                    data.updateCSVFiles();
                     break;
                 }
                 case 7: {

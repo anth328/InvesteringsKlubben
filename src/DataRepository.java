@@ -318,8 +318,16 @@ public class DataRepository {
     }
 
 
-
+    public void printUsers() {
+        for (User u : users) {
+            System.out.println(u);
         }
+    }
+
+    public void updateCSVFiles() {
+
+    }
+}
 
 
 
