@@ -155,7 +155,7 @@ public class MainTestMenu {
         System.out.println("LEDER MENU");
 
         while (run){
-
+            System.out.println("Indtast dit valg:");
             System.out.println("1: Se alle brugere");
             System.out.println("2: Se alle transaktioner");
             System.out.println("3: Se personlig portofolio");
@@ -166,7 +166,7 @@ public class MainTestMenu {
             System.out.println("8: Transaktion historik");
             System.out.println("9: Køb aktier");
             System.out.println("10: Sælg aktier");
-            System.out.println("");
+
 
 
             int valg = sc.nextInt();
@@ -183,11 +183,11 @@ public class MainTestMenu {
                     break;
                 }
                 case 3:{
-                    portfolio.printEgneAktier(user);
+                    portfolio.printPortfolio(user);
                     break;
                 }
                 case 4: {
-                    portfolio.printAllPortfolios();
+                    portfolio.printAllPortfolios();//
                     break;
                 }
                 case 5: {
@@ -195,11 +195,19 @@ public class MainTestMenu {
                     break;
                 }
                 case 6: {
-                    data.updateCSVFiles();
+                     //
                     break;
                 }
                 case 7: {
-                    data.printAktierBasic();
+                    data.printAktierBasic(); // viser alle aktier
+
+                    System.out.println("Vælg aktie nummer for at se alle detaljer:");
+                    Scanner sc2 = new Scanner(System.in);
+                    int index = sc2.nextInt();   // vælge aktie
+
+                    data.printAktieFull(index);
+
+                    System.out.println("Vil du købe aktier? Tryk 4");
                     break;
                 }
                 case 8: {
@@ -209,7 +217,6 @@ public class MainTestMenu {
                 case 9: {
                     Scanner scanner = new Scanner(System.in);
                     scanner.nextLine();
-
                     System.out.println("Indtast ticker (fx AAPL):");
                     String ticker = scanner.nextLine().toUpperCase();
 

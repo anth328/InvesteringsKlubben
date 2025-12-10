@@ -342,4 +342,15 @@ public class Portfolio {
             System.out.println(p);
         }
     }
+
+    public void printPortfolio(User user) {
+
+        //addUsersTransactionsToList(user);
+        //transactionToAktie();
+
+        System.out.println("PORTFØLJE FOR " + user.getFullname());
+
+
+    }
+
 }
