@@ -20,6 +20,7 @@ public class Portfolio {
 
     private DataRepository data;
     private User user;
+    private Currency currency = new Currency();
 
     public Portfolio(DataRepository data){
         this.data = data;
@@ -106,21 +107,35 @@ public class Portfolio {
 */
 
     public void calculateBalance(User user) {
+        addUsersTransactionsToList(user);
 
-        float currentBalance = user.getInitialCash(); // startbeløb
+        float currentBalance = user.getInitialCash();
+        float price = 0;
 
         for (Transactions t : egneTransactions) {
 
+            if (!Objects.equals(t.getCurrency(), "DKK")){
+                for (Currency c : data.getCurrency()){
+                    if (c.getCurrency().matches(t.getCurrency())){
+                        price = currency.calculateCurrencyToDKK(c, t);
+                    }
+                }
+            }
+
+            if (Objects.equals(t.getCurrency(), "DKK")){
+                price += t.getPrice();
+            }
+
             if (t.getOrder().equalsIgnoreCase("buy")) {
-                currentBalance -= t.getPrice() * t.getQuantity();
+                currentBalance -= price * t.getQuantity();
             }
 
             if (t.getOrder().equalsIgnoreCase("sell")) {
-                currentBalance += t.getPrice() * t.getQuantity();
+                currentBalance += price * t.getQuantity();
             }
         }
 
-        setBalance(currentBalance);  // <-- KUN ÉN GANG, EFTER LOOP
+        setBalance(currentBalance);
     }
 
 
@@ -233,7 +248,7 @@ public class Portfolio {
                 LocalDate.now(),
                 aktie.getTicker(),
                 aktie.getPrice(),
-                "DKK",
+                aktie.getCurrency().getCurrency(),
                 "buy",
                 quantity
         );
@@ -297,7 +312,7 @@ public class Portfolio {
                 LocalDate.now(),
                 aktie.getTicker(),
                 aktie.getPrice(),
-                "DKK",
+                aktie.getCurrency().getCurrency(),
                 "sell",
                 quantity
         );

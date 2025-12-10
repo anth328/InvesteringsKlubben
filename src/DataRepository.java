@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Objects;
 
 
 public class DataRepository {
@@ -30,7 +31,14 @@ public class DataRepository {
                 String name = aktiedata[1];
                 String sector = aktiedata[2];
                 float price = Float.parseFloat(aktiedata[3].replace(",", "."));
-                String currency = aktiedata[4];
+
+                Currency currency = null;
+                for (Currency c : getCurrency()){
+                    if(Objects.equals(c.getCurrency(), aktiedata[4])){
+                        currency = c;
+                    }
+                }
+
                 String rating = aktiedata[5];
                 float dividendYield = Float.parseFloat(aktiedata[6].replace(",", "."));
                 String market = aktiedata[7];

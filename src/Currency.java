@@ -35,9 +35,9 @@ public class Currency {
         return lastUpdate;
     }
 
-    public float calculateCurrencyToDKK(Currency currency,Aktie aktie){
-        float money = aktie.getPrice();
-        if(Objects.equals(aktie.getCurrency(), currency.getCurrency())){
+    public float calculateCurrencyToDKK(Currency currency,Transactions transaction){
+        float money = transaction.getPrice();
+        if(Objects.equals(transaction.getCurrency(), currency.getCurrency())){
             money = money * currency.getRate();
         }
         return money;

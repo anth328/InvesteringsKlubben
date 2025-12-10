@@ -6,7 +6,7 @@ public class Aktie {
     private String name;
     private String sector;
     private float price;
-    private String currency;
+    private Currency currency;
     private String rating;
     private float dividendYield;
     private String market;
@@ -15,7 +15,7 @@ public class Aktie {
     Aktie() {
     }
 
-    public Aktie(String ticker, String name, String sector, float price, String currency, String rating, float dividendYield, String market, LocalDate lastUpdated) {
+    public Aktie(String ticker, String name, String sector, float price, Currency currency, String rating, float dividendYield, String market, LocalDate lastUpdated) {
         this.ticker = ticker;
         this.name = name;
         this.sector = sector;
@@ -31,7 +31,7 @@ public class Aktie {
         return ticker;
     }
 
-    public String getCurrency(){
+    public Currency getCurrency(){
         return currency;
     }
 

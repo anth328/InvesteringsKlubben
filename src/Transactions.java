@@ -10,7 +10,6 @@ public class Transactions {
     private String currency;
     private String order_type;
     private int quantity;
-    //private Salg salg;//
 
     ArrayList<Aktie> Aktier = new ArrayList<>();
 
@@ -29,45 +28,39 @@ public class Transactions {
         this.quantity = quantity;
     }
 
-    public String toString() {
-        return "Transaction ID: " + id + ", User ID: " + user_id + " Date: " + date + ", Ticker: " + ticker + ", Price: " + price + ", currency: " + currency + ", order_type: " + order_type + ", Quantity: " + quantity;
-    }
-
-
-
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public int getUserid(){
+    public int getUserid() {
         return user_id;
     }
 
-    public String getTicker(){
+    public String getTicker() {
         return ticker;
     }
 
-    public float getPrice(){
+    public float getPrice() {
         return price;
     }
 
-    public int getQuantity(){
+    public int getQuantity() {
         return quantity;
     }
 
-    public String getCurrency(){
+    public String getCurrency() {
         return currency;
     }
 
-    public LocalDate getDato(){
+    public LocalDate getDato() {
         return date;
     }
 
-    public String getOrder(){
+    public String getOrder() {
         return order_type;
     }
 
-    //public Salg getSalg(){
-        //return salg;
+    public String toString() {
+        return "Transaction ID: " + id + ", User ID: " + user_id + " Date: " + date + ", Ticker: " + ticker + ", Price: " + price + ", currency: " + currency + ", order_type: " + order_type + ", Quantity: " + quantity;
     }
-
+}

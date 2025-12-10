@@ -5,6 +5,7 @@ public class MainTestMenu {
     public static void main(String[] args) {
 
         DataRepository data = new DataRepository();
+        data.currency(); // ALTID, ALLTID KØR DENNE HER METODE FØR data.stockMarket() ELLER HELE PROGRAMMET DØR
         data.bruger();
         data.stockMarket();
         data.bonds();
