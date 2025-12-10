@@ -18,7 +18,7 @@ public class MainTestMenu {
         System.out.println("Brugerens rolle: " + aktiveUser.getRole());
 
         if (aktiveUser.getRole() == UserRole.leder) {
-            lederMenu(user, data, portfolio);
+            lederMenu(aktiveUser, data, portfolio);
 
         } else {
 
@@ -49,14 +49,14 @@ public class MainTestMenu {
 
                 switch (valg) {
                     case 1 -> {
-                        System.out.println("1: for hjælp");
+                        System.out.println("1: Hjælp");
                         System.out.println("2: Se aktiemarkedet");
                         System.out.println("3: Se obligationer");
                         System.out.println("4: Køb aktier");
                         System.out.println("5: Vis alle transaktioner");
                         System.out.println("6: Se Aktier som du investerer!");
                         System.out.println("7: Sælg aktier");
-                        System.out.println("8: Se rank");
+                        System.out.println("8: Se rangliste");
                         pause(sc);
                     }
 
@@ -175,113 +175,113 @@ public class MainTestMenu {
     }
 
 
-    public static void lederMenu (User user, DataRepository data, Portfolio portfolio){
+    public static void lederMenu(User aktiveUser, DataRepository data, Portfolio portfolio) {
 
-        portfolio.calculateBalance(user);
         Scanner sc = new Scanner(System.in);
         boolean run = true;
-        System.out.println("LEDER MENU");
 
-        while (run){
-            System.out.println("Indtast dit valg:");
+        System.out.println("===== LEDER MENU ======");
+        System.out.println("Velkommen til " + aktiveUser.getFullname());
+
+        while (run) {
+            System.out.println("\nIndtast dit valg:");
             System.out.println("1: Se alle brugere");
             System.out.println("2: Se alle transaktioner");
-            System.out.println("3: Se personlig portofolio");
-            System.out.println("4: Se alle portofolios");
-            System.out.println("5: Se rangliste");
-            System.out.println("6: Opdater CSV");
-            System.out.println("7: Se Aktiemarkedet");
-            System.out.println("8: Transaktion historik");
-            System.out.println("9: Køb aktier");
-            System.out.println("10: Sælg aktier");
+            System.out.println("3: Se portefølje for specifik bruger");
+            System.out.println("4: Se rangliste");
+            System.out.println("5: Se aktiemarkedet");
+            System.out.println("6: Se transaktionshistorik for specifik bruger");
+            System.out.println("0: Log ud");
 
+            int valg = readInt(sc, "Vælg: ");
 
+            switch (valg) {
 
-            int valg = sc.nextInt();
-
-            switch(valg){
-
-                case 1: {
+                case 1 -> {
+                    System.out.println("\n==== ALLE BRUGERE ====");
                     data.printUsers();
-
-                    break;
+                    pause(sc);
                 }
-                case 2: {
+
+                case 2 -> {
+                    System.out.println("\n==== ALLE TRANSAKTIONER ====");
                     data.printTransactions();
-                    break;
+                    pause(sc);
                 }
-                case 3:{
-                    portfolio.printPortfolio(user);
-                    break;
-                }
-                case 4: {
-                    portfolio.printAllPortfolios();//
-                    break;
-                }
-                case 5: {
-                    portfolio.rankList();
-                    break;
-                }
-                case 6: {
-                     //
-                    break;
-                }
-                case 7: {
-                    data.printAktierBasic(); // viser alle aktier
 
-                    System.out.println("Vælg aktie nummer for at se alle detaljer:");
-                    Scanner sc2 = new Scanner(System.in);
-                    int index = sc2.nextInt();   // vælge aktie
+                case 3 -> {
+                    System.out.println("\nIndtast bruger-ID for den portefølje du vil se:");
+                    int id = readInt(sc, "> ");
 
-                    data.printAktieFull(index);
-
-                    System.out.println("Vil du købe aktier? Tryk 4");
-                    break;
-                }
-                case 8: {
-                    data.printTransactions();
-                    break;
-                }
-                case 9: {
-                    Scanner scanner = new Scanner(System.in);
-                    scanner.nextLine();
-                    System.out.println("Indtast ticker (fx AAPL):");
-                    String ticker = scanner.nextLine().toUpperCase();
-
-                    Aktie chosen = null;
-                    for (Aktie a : data.getAktier()) {
-                        if (a.getTicker().equalsIgnoreCase(ticker)) {
-                            chosen = a;
+                    User valgt = null;
+                    for (User u : data.getUsers()) {
+                        if (u.getUser_id() == id) {
+                            valgt = u;
                             break;
                         }
                     }
 
-                    if (chosen == null) {
-                        System.out.println("Aktie findes ikke!");
-                        break;
+                    if (valgt == null) {
+                        System.out.println("Bruger ikke fundet.");
+                    } else {
+                        portfolio.printPortfolio(valgt);
                     }
 
-                    System.out.println("Indtast antal:");
-                    int antal = scanner.nextInt();
-
-                    portfolio.buyAktie(user, chosen, antal);
-                    break;
+                    pause(sc);
                 }
 
-                case 10: {
-
-                    break;
+                case 4 -> {
+                    System.out.println("\n==== RANGLISTE (PROFIT) ====");
+                    portfolio.rankList();
+                    pause(sc);
                 }
 
-                default:
+                case 5 -> {
+                    System.out.println("\n==== AKTIEMARKEDET ====");
+                    data.printAktierBasic();
+                    int index = readInt(sc, "Vælg aktie nummer (Enter for tilbage): ");
+                    if (index != 0) {
+                        data.printAktieFull(index);
+                    }
+                    pause(sc);
+                }
+
+                case 6 -> {
+                    System.out.println("\nIndtast bruger-ID for at se transaktionshistorik:");
+                    int id = readInt(sc, "> ");
+
+                    boolean found = false;
+                    System.out.println("\n==== Transaktioner for " + id + " ====");
+                    for (Transactions t : data.getTransactions()) {
+                        if (t.getUserid() == id) {
+                            System.out.println(t);
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Ingen transaktioner fundet for denne bruger.");
+                    }
+
+                    pause(sc);
+                }
+
+                case 0 -> {
+                    System.out.println("Logger ud af ledermenu...");
+                    run = false;
+                }
+
+                default -> {
                     System.out.println("Ugyldigt valg!");
-
+                    pause(sc);
+                }
             }
-
-
-
         }
     }
+
+
+
+
 }
 
 

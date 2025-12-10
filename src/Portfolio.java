@@ -314,6 +314,7 @@ public class Portfolio {
 
     public void rankList() {
         float profit = 0;
+        rankList.clear();
 
         if (data.getUsers().isEmpty()) {
             data.bruger();
@@ -345,12 +346,37 @@ public class Portfolio {
 
     public void printPortfolio(User user) {
 
-        //addUsersTransactionsToList(user);
-        //transactionToAktie();
+        addUsersTransactionsToList(user);
+        transactionToAktie();
+        calculateBalance(user);
 
-        System.out.println("PORTFØLJE FOR " + user.getFullname());
+        System.out.println("====================================");
+        System.out.println("PORTFØLJE FOR: " + user.getFullname());
+        System.out.println("Saldo: " + getBalance() + " DKK");
+        System.out.println("------------------------------------");
+
+        System.out.println("Aktier i porteføljen:");
+        if (getEgneAktier().isEmpty()) {
+            System.out.println("  (Ingen aktier)");
+        } else {
+            for (Aktie a : getEgneAktier()) {
+                System.out.println("  " + a);
+            }
+        }
+
+        System.out.println("\nTransaktioner:");
+        if (egneTransactions.isEmpty()) {
+            System.out.println("  (Ingen transaktioner)");
+        } else {
+            for (Transactions t : egneTransactions) {
+                System.out.println("  " + t);
+            }
+        }
+
+        System.out.println("====================================");
+    }
+
 
 
     }
 
-}
