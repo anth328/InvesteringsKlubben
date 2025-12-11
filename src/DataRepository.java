@@ -37,6 +37,9 @@ public class DataRepository {
                     if(Objects.equals(c.getCurrency(), aktiedata[4])){
                         currency = c;
                     }
+                    if (currency == null) {
+                        currency = new Currency("DKK", "DKK", 1f, LocalDate.now());
+                    }
                 }
 
                 String rating = aktiedata[5];

@@ -1,8 +1,5 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Portfolio {
 
@@ -70,7 +67,7 @@ public class Portfolio {
         }
     }
 
-    public void printEgneAktier(){
+    /*public void printEgneAktier(){
         for (Aktie a : getEgneAktier()){
             System.out.println(a);
         }
@@ -95,7 +92,7 @@ public class Portfolio {
             return 0;
         }
         return egetAktier.get(0).getPrice();
-    }
+    }*/
 
     public void calculateBalance(User user) {
         addUsersTransactionsToList(user);
@@ -200,30 +197,26 @@ public class Portfolio {
 
     public void transactionToAktie() {
         egetAktier.clear();
-        for (Transactions d : egneTransactions) {
-            for (Aktie a : data.getAktier()) {
-                if (d.getTicker().equals(a.getTicker())) {
+
+        HashMap<String, Integer> counts = new HashMap<>();
+
+        for (Transactions t : egneTransactions) {
+            int qty = t.getQuantity();
+            if (t.getOrder().equalsIgnoreCase("sell")) qty = -qty;
+
+            counts.put(t.getTicker(), counts.getOrDefault(t.getTicker(), 0) + qty);
+        }
+
+        for (Aktie a : data.getAktier()) {
+            if (counts.getOrDefault(a.getTicker(), 0) > 0) {
+                int amount = counts.get(a.getTicker());
+                for (int i = 0; i < amount; i++) {
                     egetAktier.add(a);
                 }
             }
         }
     }
 
-    public Aktie printEgetAktier() {
-        for (Aktie a : egetAktier) {
-            return a;
-        }
-        return null;
-    }
-
-    public int MaengdeAktier() {
-        int i = 0;
-        transactionToAktie();
-        for (Aktie a : egetAktier) {
-            i++;
-        }
-        return i;
-    }
 
 
     public void buyAktie(User user, Aktie aktie, int quantity) {
@@ -285,12 +278,17 @@ public class Portfolio {
     public void sellAktie(User user, Aktie aktie, int quantity)
     {
         calculateBalance(user);
+
+        // OPDATER LISTEN OVER EJEDE AKTIER
+        addUsersTransactionsToList(user);
+        transactionToAktie();
+
         if (quantity <= 0) {
             System.out.println("Ugyldigt antal.");
             return;
         }
 
-        // Tæl hvor mange bruger ejer af denne aktie
+        // Tæl hvor mange brugeren ejer
         int owned = 0;
         for (Aktie a : egetAktier) {
             if (a.getTicker().equalsIgnoreCase(aktie.getTicker())) {
@@ -298,20 +296,20 @@ public class Portfolio {
             }
         }
 
-        // Kan ikke sælge mere end man ejer
+        // Kan ikke sælge flere end man ejer
         if (owned < quantity) {
             System.out.println("FEJL: Du kan ikke sælge " + quantity + " stk af " + aktie.getTicker() +
                     " fordi du kun ejer " + owned);
             return;
         }
 
-        // Beregn total pris
+        // Beregn salgspris
         float totalPrice = aktie.getPrice() * quantity;
 
-        // Læg penge til balance
+        // Læg penge til saldo
         balance += totalPrice;
 
-        // Fjern eget aktier fra listen
+        // Fjern solgte aktier
         int removed = 0;
         for (int i = 0; i < egetAktier.size() && removed < quantity; i++) {
             if (egetAktier.get(i).getTicker().equalsIgnoreCase(aktie.getTicker())) {
@@ -321,7 +319,7 @@ public class Portfolio {
             }
         }
 
-        // Opret salgs-transaktion
+        // Opret transaktion
         Transactions transaction = new Transactions(
                 data.getTransactions().size() + 1,
                 user.getUser_id(),
@@ -342,6 +340,7 @@ public class Portfolio {
         System.out.println("Total pris: " + totalPrice);
         System.out.println("Ny balance: " + balance);
     }
+
 
     public void rankList() {
         float profit = 0;
@@ -408,6 +407,25 @@ public class Portfolio {
     }
 
 
+    public void printEgneAktier() {
+        HashMap<String, Integer> counts = new HashMap<>();
+
+        for (Transactions t : egneTransactions) {
+            int qty = t.getQuantity();
+            if (t.getOrder().equalsIgnoreCase("sell")) qty = -qty;
+
+            counts.put(t.getTicker(), counts.getOrDefault(t.getTicker(), 0) + qty);
+        }
+
+
+
+        for (Aktie a : data.getAktier()) {
+            int amount = counts.getOrDefault(a.getTicker(), 0);
+            if (amount > 0) {
+                System.out.println("Ticker:" + a.getTicker() + "|"  + "Amount: " + amount);
+            }
+        }
+    }
 
     }
 
