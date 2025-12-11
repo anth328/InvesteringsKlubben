@@ -105,20 +105,20 @@ public class Portfolio {
         }
 
         float currentBalance = user.getInitialCash();
-        float price = 0;
+
 
         for (Transactions t : egneTransactions) {
-
+            float price = 0;
             if (!Objects.equals(t.getCurrency(), "DKK")){
                 for (Currency c : data.getCurrency()){
                     if (c.getCurrency().matches(t.getCurrency())){
-                        price = currency.transactionCurrencyToDKK(c, t);
+                        price = c.transactionCurrencyToDKK(c, t);
                     }
                 }
             }
 
             if (Objects.equals(t.getCurrency(), "DKK")){
-                price += t.getPrice();
+                price = t.getPrice();
             }
 
             if (t.getOrder().equalsIgnoreCase("buy")) {
@@ -134,14 +134,13 @@ public class Portfolio {
     }
 
     public float convertToDKK(String currency, float price){
-        data.currency();
         if ("DKK".equalsIgnoreCase(currency)){
             return price;
         }
 
         for (Currency c : data.getCurrency()){
             if (c.getCurrency().equalsIgnoreCase(currency)){
-                return this.currency.currencyToDKK(c , price);
+                return c.currencyToDKK(c , price);
             }
         }
         throw new IllegalArgumentException("Kan ikke finde match på den indsate currency " + currency);
@@ -230,6 +229,7 @@ public class Portfolio {
 
 
     public void buyAktie(User user, Aktie aktie, int quantity) {
+        calculateBalance(user);
         float totalPrice = 0;
 
         if (quantity <= 0) {
@@ -253,6 +253,11 @@ public class Portfolio {
 
         balance -= totalPrice;
 
+        for (int i = 0; i < quantity; i++) {
+            egetAktier.add(aktie);
+        }
+
+
         Transactions transaction = new Transactions(
                 data.getTransactions().size() + 1,
                 user.getUser_id(),
@@ -263,6 +268,8 @@ public class Portfolio {
                 "buy",
                 quantity
         );
+
+
 
         //egneTransactions.add(transaction);
         data.addTransaction(transaction);
@@ -279,6 +286,7 @@ public class Portfolio {
 
     public void sellAktie(User user, Aktie aktie, int quantity)
     {
+        calculateBalance(user);
         if (quantity <= 0) {
             System.out.println("Ugyldigt antal.");
             return;
