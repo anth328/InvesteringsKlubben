@@ -319,10 +319,21 @@ public class Portfolio {
         }
 
         // Beregn salgspris
-        float totalPrice = aktie.getPrice() * quantity;
+        float salePriceDKK = 0;
 
-        // Læg penge til saldo
-        balance += totalPrice;
+
+        if(!aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+            salePriceDKK += convertToDKK(aktie.getCurrency().getCurrency(), aktie.getPrice());
+        }
+        if (aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+            salePriceDKK += aktie.getPrice();
+        }
+
+
+        salePriceDKK *= quantity;
+
+        // tilføj til balance
+        balance += salePriceDKK;
 
         // Fjern solgte aktier
         int removed = 0;
@@ -352,7 +363,7 @@ public class Portfolio {
 
         System.out.println("SALG GENNEMFØRT");
         System.out.println("Du solgte " + quantity + " x " + aktie.getTicker());
-        System.out.println("Total pris: " + totalPrice);
+        System.out.println("Total pris " + salePriceDKK);
         System.out.println("Ny balance: " + balance);
     }
 
