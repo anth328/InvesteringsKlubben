@@ -42,9 +42,8 @@ public class MainTestMenu {
                 System.out.println("3: Se obligationer");
                 System.out.println("4: Køb aktier");
                 System.out.println("5: Vis dit portefølje");
-                System.out.println("6: Se dine aktier");
-                System.out.println("7: Sælg aktier");
-                System.out.println("8: Se rank");
+                System.out.println("6: Sælg aktier");
+                System.out.println("7: Se rank");
 
                 int valg = readInt(sc, "Vælg: ");
 
@@ -107,11 +106,6 @@ public class MainTestMenu {
                     }
 
                     case 6 -> {
-                        portfolio.printEgneAktier();
-                        pause(sc);
-                    }
-
-                    case 7 -> {
                         String tickerSell = readString(sc, "Indtast ticker du vil sælge (Enter for tilbage): ").toUpperCase();
                         if (tickerSell.isEmpty()) break;
 
@@ -136,7 +130,7 @@ public class MainTestMenu {
                         pause(sc);
                     }
 
-                    case 8 -> {
+                    case 7 -> {
                         portfolio.rankList();
                         pause(sc);
                     }

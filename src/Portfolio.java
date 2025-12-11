@@ -19,17 +19,17 @@ public class Portfolio {
     private Currency currency = new Currency();
     private Scanner sc = new Scanner(System.in);
 
-    public Portfolio(DataRepository data){
+    public Portfolio(DataRepository data) {
         this.data = data;
     }
 
-    public Portfolio(User user, float balance,float profit) {
+    public Portfolio(User user, float balance, float profit) {
         this.user = user;
         this.balance = balance;
         this.profit = profit;
     }
 
-    public float getProfit(){
+    public float getProfit() {
         return profit;
     }
 
@@ -53,7 +53,7 @@ public class Portfolio {
         return currentPrice;
     }
 
-    public void setBalance(float balance){
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
@@ -61,8 +61,8 @@ public class Portfolio {
         return egetAktier;
     }
 
-    public void checkEgetAktier(){
-        if (egetAktier.isEmpty()){
+    public void checkEgetAktier() {
+        if (egetAktier.isEmpty()) {
             System.out.println("===Ingen Aktier===");
         }
     }
@@ -97,7 +97,7 @@ public class Portfolio {
     public void calculateBalance(User user) {
         addUsersTransactionsToList(user);
 
-        if (user==null){
+        if (user == null) {
             throw new IllegalArgumentException("Kan ikke finde User i csv: " + null);
         }
 
@@ -106,15 +106,15 @@ public class Portfolio {
 
         for (Transactions t : egneTransactions) {
             float price = 0;
-            if (!Objects.equals(t.getCurrency(), "DKK")){
-                for (Currency c : data.getCurrency()){
-                    if (c.getCurrency().matches(t.getCurrency())){
+            if (!Objects.equals(t.getCurrency(), "DKK")) {
+                for (Currency c : data.getCurrency()) {
+                    if (c.getCurrency().matches(t.getCurrency())) {
                         price = c.transactionCurrencyToDKK(c, t);
                     }
                 }
             }
 
-            if (Objects.equals(t.getCurrency(), "DKK")){
+            if (Objects.equals(t.getCurrency(), "DKK")) {
                 price = t.getPrice();
             }
 
@@ -130,14 +130,14 @@ public class Portfolio {
         setBalance(currentBalance);
     }
 
-    public float convertToDKK(String currency, float price){
-        if ("DKK".equalsIgnoreCase(currency)){
+    public float convertToDKK(String currency, float price) {
+        if ("DKK".equalsIgnoreCase(currency)) {
             return price;
         }
 
-        for (Currency c : data.getCurrency()){
-            if (c.getCurrency().equalsIgnoreCase(currency)){
-                return c.currencyToDKK(c , price);
+        for (Currency c : data.getCurrency()) {
+            if (c.getCurrency().equalsIgnoreCase(currency)) {
+                return c.currencyToDKK(c, price);
             }
         }
         throw new IllegalArgumentException("Kan ikke finde match på den indsate currency " + currency);
@@ -152,7 +152,7 @@ public class Portfolio {
         return (maengde * aktiePrice) - (maengde * buyPrice);
     }
 
-    public float calculateAllProfitLoss(User user){
+    public float calculateAllProfitLoss(User user) {
         float totalBuyValue = 0f;
         float totalCurrentValue = 0f;
         addUsersTransactionsToList(user);
@@ -176,13 +176,12 @@ public class Portfolio {
             if ("buy".equalsIgnoreCase(t.getOrder())) {
                 totalBuyValue += transactionPrice;
                 totalCurrentValue += marketPrice;
-            }
-            else if ("sell".equalsIgnoreCase(t.getOrder())) {
+            } else if ("sell".equalsIgnoreCase(t.getOrder())) {
                 totalBuyValue -= transactionPrice;
                 totalCurrentValue -= marketPrice;
             }
         }
-        return ((totalCurrentValue - totalBuyValue)/totalBuyValue) * 100;
+        return ((totalCurrentValue - totalBuyValue) / totalBuyValue) * 100;
     }
 
 
@@ -218,7 +217,6 @@ public class Portfolio {
     }
 
 
-
     public void buyAktie(User user, Aktie aktie, int quantity) {
         calculateBalance(user);
         float totalPrice = 0;
@@ -228,10 +226,10 @@ public class Portfolio {
             return;
         }
 
-        if(!aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+        if (!aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")) {
             totalPrice += convertToDKK(aktie.getCurrency().getCurrency(), aktie.getPrice());
         }
-        if (aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+        if (aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")) {
             totalPrice += aktie.getPrice();
         }
 
@@ -261,7 +259,6 @@ public class Portfolio {
         );
 
 
-
         //egneTransactions.add(transaction);
         data.addTransaction(transaction);
         data.saveTransactionToFile(transaction);
@@ -273,10 +270,7 @@ public class Portfolio {
     }
 
 
-
-
-    public void sellAktie(User user, Aktie aktie, int quantity)
-    {
+    public void sellAktie(User user, Aktie aktie, int quantity) {
         calculateBalance(user);
 
         // OPDATER LISTEN OVER EJEDE AKTIER
@@ -352,18 +346,18 @@ public class Portfolio {
 
         for (User u : data.getUsers()) {
             profit = (int) calculateAllProfitLoss(u);
-            Portfolio portfolio = new Portfolio(u,0,profit);
+            Portfolio portfolio = new Portfolio(u, 0, profit);
             rankList.add(portfolio);
         }
         rankList.sort(Comparator.comparing(Portfolio::getProfit).reversed());
-        for (Portfolio p : rankList){
+        for (Portfolio p : rankList) {
             System.out.println(p + "%");
         }
     }
 
     @Override
 
-    public String toString (){
+    public String toString() {
         return "Navn: " + user.getName() + " Profit: " + profit;
 
     }
@@ -385,29 +379,8 @@ public class Portfolio {
         System.out.println("Saldo: " + getBalance() + " DKK");
         System.out.println("------------------------------------");
 
-        System.out.println("Aktier i porteføljen:");
-        if (getEgneAktier().isEmpty()) {
-            System.out.println("  (Ingen aktier)");
-        } else {
-            for (Aktie a : getEgneAktier()) {
-                System.out.println("  " + a);
-            }
-        }
 
-        System.out.println("\nTransaktioner:");
-        if (egneTransactions.isEmpty()) {
-            System.out.println("  (Ingen transaktioner)");
-        } else {
-            for (Transactions t : egneTransactions) {
-                System.out.println("  " + t);
-            }
-        }
-
-        System.out.println("====================================");
-    }
-
-
-    public void printEgneAktier() {
+        System.out.println("Aktier i portfolie");
         HashMap<String, Integer> counts = new HashMap<>();
 
         for (Transactions t : egneTransactions) {
@@ -418,14 +391,33 @@ public class Portfolio {
         }
 
 
-
         for (Aktie a : data.getAktier()) {
             int amount = counts.getOrDefault(a.getTicker(), 0);
             if (amount > 0) {
-                System.out.println("Ticker:" + a.getTicker() + "|"  + "Amount: " + amount);
+                System.out.println("Ticker:" + a.getTicker() + "|" + "Amount: " + amount);
             }
         }
-    }
+
+//        System.out.println("Aktier i porteføljen:");
+//        if (getEgneAktier().isEmpty()) {
+//            System.out.println("  (Ingen aktier)");
+//        } else {
+//            for (Aktie a : getEgneAktier()) {
+//                System.out.println("  " + a);
+//            }
+//        }
+
+        System.out.println("Transaktioner:");
+        if (egneTransactions.isEmpty()) {
+            System.out.println("  (Ingen transaktioner)");
+        } else {
+            for (Transactions t : egneTransactions) {
+                System.out.println("  " + t);
+            }
+        }
+
+        System.out.println("====================================");
+
 
     }
-
+}
