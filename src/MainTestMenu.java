@@ -41,7 +41,7 @@ public class MainTestMenu {
                 System.out.println("2: Se aktiemarkedet");
                 System.out.println("3: Se obligationer");
                 System.out.println("4: Køb aktier");
-                System.out.println("5: Vis alle transaktioner");
+                System.out.println("5: Vis dit portefølje");
                 System.out.println("6: Se dine aktier");
                 System.out.println("7: Sælg aktier");
                 System.out.println("8: Se rank");
@@ -54,7 +54,7 @@ public class MainTestMenu {
                         System.out.println("2: Se aktiemarkedet");
                         System.out.println("3: Se obligationer");
                         System.out.println("4: Køb aktier");
-                        System.out.println("5: Vis alle transaktioner");
+                        System.out.println("5: Vis dit portfolje");
                         System.out.println("6: Se Aktier som du investerer!");
                         System.out.println("7: Sælg aktier");
                         System.out.println("8: Se rangliste");
@@ -102,7 +102,7 @@ public class MainTestMenu {
                     }
 
                     case 5 -> {
-                        data.printTransactions();
+                        portfolio.printPortfolio(aktiveUser);
                         pause(sc);
                     }
 
