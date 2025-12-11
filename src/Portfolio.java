@@ -156,15 +156,12 @@ public class Portfolio {
     }
 
     public float calculateAllProfitLoss(User user){
+        float totalBuyValue = 0f;
+        float totalCurrentValue = 0f;
         addUsersTransactionsToList(user);
         transactionToAktie();
 
-        float totalBuyValue = 0f;
-        float totalCurrentValue = 0f;
-
-        for (int i = 0; i < egneTransactions.size(); i++) {
-            Transactions t = egneTransactions.get(i);
-
+        for (Transactions t : egneTransactions) {
             Aktie matchingAktie = null;
             for (Aktie a : data.getAktier()) {
                 if (a.getTicker().equals(t.getTicker())) {
@@ -182,7 +179,8 @@ public class Portfolio {
             if ("buy".equalsIgnoreCase(t.getOrder())) {
                 totalBuyValue += transactionPrice;
                 totalCurrentValue += marketPrice;
-            } else if ("sell".equalsIgnoreCase(t.getOrder())) {
+            }
+            else if ("sell".equalsIgnoreCase(t.getOrder())) {
                 totalBuyValue -= transactionPrice;
                 totalCurrentValue -= marketPrice;
             }
@@ -360,7 +358,7 @@ public class Portfolio {
         }
         rankList.sort(Comparator.comparing(Portfolio::getProfit).reversed());
         for (Portfolio p : rankList){
-            System.out.println(p);
+            System.out.println(p + "%");
         }
     }
 
