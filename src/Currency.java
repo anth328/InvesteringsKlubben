@@ -35,12 +35,16 @@ public class Currency {
         return lastUpdate;
     }
 
-    public float calculateCurrencyToDKK(Currency currency,Transactions transaction){
+    public float transactionCurrencyToDKK(Currency currency, Transactions transaction){
         float money = transaction.getPrice();
         if(Objects.equals(transaction.getCurrency(), currency.getCurrency())){
             money = money * currency.getRate();
         }
         return money;
+    }
+
+    public float currencyToDKK(Currency currency, float price){
+        return price * currency.getRate();
     }
 
     @Override

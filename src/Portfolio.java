@@ -1,9 +1,8 @@
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.Collections;
+import java.util.Scanner;
 
 public class Portfolio {
 
@@ -21,6 +20,7 @@ public class Portfolio {
     private DataRepository data;
     private User user;
     private Currency currency = new Currency();
+    private Scanner sc = new Scanner(System.in);
 
     public Portfolio(DataRepository data){
         this.data = data;
@@ -64,6 +64,12 @@ public class Portfolio {
         return egetAktier;
     }
 
+    public void checkEgetAktier(){
+        if (egetAktier.isEmpty()){
+            System.out.println("===Ingen Aktier===");
+        }
+    }
+
     public void printEgneAktier(){
         for (Aktie a : getEgneAktier()){
             System.out.println(a);
@@ -91,23 +97,12 @@ public class Portfolio {
         return egetAktier.get(0).getPrice();
     }
 
-   /* public void calculateBalance(User user) {
-        float balance = user.getInitialCash();
-        for (Transactions t : egneTransactions) {
-            if (t.getOrder().equalsIgnoreCase("buy"))
-            {
-                    balance -= t.getPrice();
-                }
-                if (Objects.equals(t.getOrder(), "sell")) {
-                    balance += t.getPrice();
-                }
-            }
-            setBalance(balance);
-        }
-*/
-
     public void calculateBalance(User user) {
         addUsersTransactionsToList(user);
+
+        if (user==null){
+            throw new IllegalArgumentException("Kan ikke finde User i csv: " + null);
+        }
 
         float currentBalance = user.getInitialCash();
         float price = 0;
@@ -117,7 +112,7 @@ public class Portfolio {
             if (!Objects.equals(t.getCurrency(), "DKK")){
                 for (Currency c : data.getCurrency()){
                     if (c.getCurrency().matches(t.getCurrency())){
-                        price = currency.calculateCurrencyToDKK(c, t);
+                        price = currency.transactionCurrencyToDKK(c, t);
                     }
                 }
             }
@@ -136,6 +131,20 @@ public class Portfolio {
         }
 
         setBalance(currentBalance);
+    }
+
+    public float convertToDKK(String currency, float price){
+        data.currency();
+        if ("DKK".equalsIgnoreCase(currency)){
+            return price;
+        }
+
+        for (Currency c : data.getCurrency()){
+            if (c.getCurrency().equalsIgnoreCase(currency)){
+                return this.currency.currencyToDKK(c , price);
+            }
+        }
+        throw new IllegalArgumentException("Kan ikke finde match på den indsate currency " + currency);
     }
 
 
@@ -220,14 +229,22 @@ public class Portfolio {
     }
 
 
-    public void buyAktie(User user, Aktie aktie, int quantity)
-    {
+    public void buyAktie(User user, Aktie aktie, int quantity) {
+        float totalPrice = 0;
+
         if (quantity <= 0) {
             System.out.println("Ugyldigt antal.");
             return;
         }
 
-        float totalPrice = aktie.getPrice() * quantity;
+        if(!aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+            totalPrice += convertToDKK(aktie.getCurrency().getCurrency(), aktie.getPrice());
+        }
+        if (aktie.getCurrency().getCurrency().equalsIgnoreCase("DKK")){
+            totalPrice += aktie.getPrice();
+        }
+
+        totalPrice = totalPrice * quantity;
 
         if (totalPrice > balance) {
             System.out.println("Ikke nok penge til at købe " + quantity + " stk af " + aktie.getTicker());
@@ -236,12 +253,6 @@ public class Portfolio {
 
         balance -= totalPrice;
 
-        // Tilføj aktier til portefølje
-        for (int i = 0; i < quantity; i++) {
-            egetAktier.add(aktie);
-        }
-
-        // Opret transaktion
         Transactions transaction = new Transactions(
                 data.getTransactions().size() + 1,
                 user.getUser_id(),
@@ -253,10 +264,9 @@ public class Portfolio {
                 quantity
         );
 
-        egneTransactions.add(transaction);
+        //egneTransactions.add(transaction);
         data.addTransaction(transaction);
         data.saveTransactionToFile(transaction);
-
 
         System.out.println("KØB GENNEMFØRT");
         System.out.println("Du købte " + quantity + " x " + aktie.getTicker());
