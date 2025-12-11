@@ -29,7 +29,11 @@ public class Portfolio {
         this.profit = profit;
     }
 
-    public float getProfit() {
+    public User getUser(){
+        return user;
+    }
+
+    public float getProfit(){
         return profit;
     }
 
@@ -143,45 +147,61 @@ public class Portfolio {
         throw new IllegalArgumentException("Kan ikke finde match på den indsate currency " + currency);
     }
 
-
-    public float calculateProfitLoss() {
-        if (egetAktier.isEmpty()) {
-            return 0;
-        }
-        float aktiePrice = egetAktier.get(0).getPrice();
-        return (maengde * aktiePrice) - (maengde * buyPrice);
-    }
-
     public float calculateAllProfitLoss(User user) {
-        float totalBuyValue = 0f;
-        float totalCurrentValue = 0f;
+        float totalInvested = 0f;
+        float totalSellValue = 0f;
+        Map<String, Float> netQtyPerTicker = new HashMap<>(); // Net shares per ticker
+
         addUsersTransactionsToList(user);
         transactionToAktie();
 
         for (Transactions t : egneTransactions) {
+            String ticker = t.getTicker();
+            float txPrice = t.getPrice();
+            float qty     = t.getQuantity();
+
+            float currentQty = netQtyPerTicker.getOrDefault(ticker, 0f);
+
+            if ("buy".equalsIgnoreCase(t.getOrder())) {
+                totalInvested += txPrice * qty;
+                netQtyPerTicker.put(ticker, currentQty + qty);
+
+            } else if ("sell".equalsIgnoreCase(t.getOrder())) {
+                totalSellValue += txPrice * qty;
+                netQtyPerTicker.put(ticker, currentQty - qty);
+            }
+        }
+
+        float openPositionsValue = 0f;
+
+        for (Map.Entry<String, Float> entry : netQtyPerTicker.entrySet()) {
+            String ticker = entry.getKey();
+            float netQty = entry.getValue();
+
+            if (netQty <= 0f) continue;
+
             Aktie matchingAktie = null;
             for (Aktie a : data.getAktier()) {
-                if (a.getTicker().equals(t.getTicker())) {
+                if (a.getTicker().equals(ticker)) {
                     matchingAktie = a;
                     break;
                 }
             }
-            if (matchingAktie == null) {
-                continue;
-            }
+            if (matchingAktie == null) continue;
 
-            float transactionPrice = t.getPrice();
             float marketPrice = matchingAktie.getPrice();
-
-            if ("buy".equalsIgnoreCase(t.getOrder())) {
-                totalBuyValue += transactionPrice;
-                totalCurrentValue += marketPrice;
-            } else if ("sell".equalsIgnoreCase(t.getOrder())) {
-                totalBuyValue -= transactionPrice;
-                totalCurrentValue -= marketPrice;
-            }
+            openPositionsValue += marketPrice * netQty;
         }
-        return ((totalCurrentValue - totalBuyValue) / totalBuyValue) * 100;
+
+        float totalValue = totalSellValue + openPositionsValue;
+
+        float profit = totalValue - totalInvested;
+
+        if (totalInvested == 0f) {
+            return 0f;
+        }
+
+        return (profit / totalInvested) * 100f;
     }
 
 
@@ -257,6 +277,7 @@ public class Portfolio {
                 "buy",
                 quantity
         );
+
 
 
         //egneTransactions.add(transaction);
@@ -345,13 +366,15 @@ public class Portfolio {
         }
 
         for (User u : data.getUsers()) {
-            profit = (int) calculateAllProfitLoss(u);
-            Portfolio portfolio = new Portfolio(u, 0, profit);
+            float percentGrowth = calculateAllProfitLoss(u); // percent already
+            Portfolio portfolio = new Portfolio(u, 0f, percentGrowth);
             rankList.add(portfolio);
         }
+
         rankList.sort(Comparator.comparing(Portfolio::getProfit).reversed());
+
         for (Portfolio p : rankList) {
-            System.out.println(p + "%");
+            System.out.println(p.getUser().getName() + ": " + p.getProfit() + "%");
         }
     }
 
@@ -417,7 +440,8 @@ public class Portfolio {
         }
 
         System.out.println("====================================");
+    }
+
 
 
     }
-}
