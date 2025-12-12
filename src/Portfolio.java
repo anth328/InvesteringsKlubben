@@ -71,32 +71,6 @@ public class Portfolio {
         }
     }
 
-    /*public void printEgneAktier(){
-        for (Aktie a : getEgneAktier()){
-            System.out.println(a);
-        }
-    }
-
-    public void printEgneAktier(User user){
-        for (Transactions t : egneTransactions){
-            System.out.println(t);
-        }
-    }
-
-    public void addAktier(Aktie aktier) {
-        egetAktier.add(aktier);
-    }
-
-    public void removeAktier(Aktie aktier) {
-        egetAktier.remove(aktier);
-    }
-
-    public float getAktiePrice() {
-        if (egetAktier.isEmpty()) {
-            return 0;
-        }
-        return egetAktier.get(0).getPrice();
-    }*/
 
     public void calculateBalance(User user) {
         addUsersTransactionsToList(user);
@@ -432,14 +406,6 @@ public class Portfolio {
             }
         }
 
-//        System.out.println("Aktier i porteføljen:");
-//        if (getEgneAktier().isEmpty()) {
-//            System.out.println("  (Ingen aktier)");
-//        } else {
-//            for (Aktie a : getEgneAktier()) {
-//                System.out.println("  " + a);
-//            }
-//        }
 
         System.out.println("Transaktioner:");
         if (egneTransactions.isEmpty()) {

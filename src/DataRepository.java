@@ -155,35 +155,6 @@ public class DataRepository {
         }
     }
 
-    /*
-    Oprette en ArrayList og initierere den
-    Lave en add metode til at tilføje en transaktion til ArrayListen
-    en metode til at læse transaktioner fra en fil
-     */
-   /* public void readTransactionsFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
-            String line;  br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] transactionData = line.split(semiColon);
-                int id = Integer.parseInt(transactionData[0]);
-                int userid = Integer.parseInt(transactionData[1]);
-                String ticker = transactionData[2];
-                float pris = Float.parseFloat(transactionData[3].replace(",", "."));
-                int maengde = Integer.parseInt(transactionData[4]);
-                float valuta = Float.parseFloat(transactionData[5].replace(",", "."));
-                int dato = Integer.parseInt(transactionData[6]);
-                int order = Integer.parseInt(transactionData[7]);
-                Salg salg = Salg.valueOf(transactionData[8]);
-                Transactions transaction = new Transactions(id, userid, ticker, pris, maengde, valuta, dato, order, salg);
-                transactions.add(transaction);
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Fejl ved læsning af fil: " + e.getMessage());
-        }
-    }
-*/
 
     public void currency(){
         try (BufferedReader br = new BufferedReader(new FileReader("currency.csv"))){

@@ -12,8 +12,7 @@ public class Aktie {
     private String market;
     private LocalDate lastUpdated;
 
-    Aktie() {
-    }
+    Aktie() {}
 
     public Aktie(String ticker, String name, String sector, float price, Currency currency, String rating, float dividendYield, String market, LocalDate lastUpdated) {
         this.ticker = ticker;

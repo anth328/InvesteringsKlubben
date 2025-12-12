@@ -13,8 +13,7 @@ public class Transactions {
 
     ArrayList<Aktie> Aktier = new ArrayList<>();
 
-    public Transactions() {
-    }
+    public Transactions() {}
 
     public Transactions(int id, int user_id, LocalDate date, String ticker, float price, String currency, String order_type, int quantity) {
 
