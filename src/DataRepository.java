@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.util.Objects;
 
 
-public class DataRepository {
+public class DataRepository implements IDataRepository {
 
     private ArrayList<Aktie> aktier;
     private ArrayList<Portfolio> portfolioList;
